@@ -45,7 +45,10 @@ export default class Database
         }
     }
 
-    
+    public insertData()
+    {
+        
+    }
 
     public close()
     {

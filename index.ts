@@ -1,10 +1,15 @@
 import Database from './classes/Database';
+import 'fs';
+import { readFileSync } from 'fs';
 
-// Connect to the MongoDB database
+// Get Configuration from Configuration file
 
-const url: string = 'mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.0';
-const colName: string = 'users';
+let config = readFileSync('./config.json');
+let data = JSON.parse(config.toString());
+const url = data.url;
+const colName = data.collections[0];
 
+// Main
 
 function main()
 {

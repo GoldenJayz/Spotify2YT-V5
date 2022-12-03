@@ -28,6 +28,8 @@ class Database {
             throw err;
         }
     }
+    insertData() {
+    }
     close() {
         this.client.close();
     }

@@ -6,11 +6,14 @@ const url: string = 'mongodb://127.0.0.1:27017/?directConnection=true&serverSele
 const colName: string = 'users';
 
 
-async function main()
+function main()
 {
-    const db = await new Database(url, colName);
+    const db = new Database(url, colName);
 
-    let docs = db.listDocuments().then((data: any) => console.log(data));
+    db.listDocuments().then((data: any) => {
+        console.log(data);
+        db.close();
+    });
 }
 
 main();

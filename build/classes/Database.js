@@ -5,12 +5,12 @@ class Database {
     constructor(url, colName) {
         this.url = url;
         this.colName = colName;
-        this.db = new mongodb_1.MongoClient(this.url);
+        this.client = new mongodb_1.MongoClient(this.url);
         this.connect(this.colName);
     }
     connect(collectionName) {
         try {
-            this.db = this.db.db('Spotify2Yt');
+            this.db = this.client.db('Spotify2Yt');
             this.collection = this.db.collection(collectionName);
             return this.collection;
         }
@@ -27,6 +27,9 @@ class Database {
         catch (err) {
             throw err;
         }
+    }
+    close() {
+        this.client.close();
     }
 }
 exports.default = Database;

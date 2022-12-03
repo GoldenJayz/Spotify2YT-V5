@@ -6,12 +6,13 @@ export default class Database
     private colName: string;
     private collection: any;
     private db: any;
+    private client: any;
 
     public constructor(url: string, colName: string)
     {
         this.url = url;
         this.colName = colName;
-        this.db = new MongoClient(this.url);
+        this.client = new MongoClient(this.url);
         this.connect(this.colName);
     }
 
@@ -19,7 +20,7 @@ export default class Database
     {
         try
         {
-            this.db = this.db.db('Spotify2Yt');
+            this.db = this.client.db('Spotify2Yt');
             this.collection = this.db.collection(collectionName);
 
             return this.collection;
@@ -42,5 +43,12 @@ export default class Database
         {
             throw err;
         }
+    }
+
+    
+
+    public close()
+    {
+        this.client.close();
     }
 }

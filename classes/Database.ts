@@ -45,9 +45,34 @@ export default class Database
         }
     }
 
-    public insertData()
+    public insertData(data: object[])
     {
-        
+        let res: any;
+
+        try 
+        {
+            if (data.length > 1) res = this.collection.insertMany(data);
+            else res = this.collection.insertOne(data[0]);
+            return res;
+        }
+        catch (err)
+        {
+            throw err;
+        }
+    }
+
+    public removeAllData()
+    {
+        let res: any;
+        try
+        {
+            res = this.collection.deleteMany({});
+            return res;
+        }
+        catch (err)
+        {
+            throw err;
+        }
     }
 
     public close()

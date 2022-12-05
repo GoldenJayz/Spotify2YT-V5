@@ -28,7 +28,28 @@ class Database {
             throw err;
         }
     }
-    insertData() {
+    insertData(data) {
+        let res;
+        try {
+            if (data.length > 1)
+                res = this.collection.insertMany(data);
+            else
+                res = this.collection.insertOne(data[0]);
+            return res;
+        }
+        catch (err) {
+            throw err;
+        }
+    }
+    removeAllData() {
+        let res;
+        try {
+            res = this.collection.deleteMany({});
+            return res;
+        }
+        catch (err) {
+            throw err;
+        }
     }
     close() {
         this.client.close();

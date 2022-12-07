@@ -1,0 +1,5 @@
+{
+  "url": "mongodb://192.168.1.31:27017",
+  "collections": ["users"],
+  "port": 6969
+}

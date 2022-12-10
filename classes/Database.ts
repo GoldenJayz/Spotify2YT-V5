@@ -26,9 +26,12 @@ export default class Database {
     }
   }
 
-  public listDocuments() {
+  public listDocuments(id?: string) {
     try {
-      const documents = this.collection.find({}).toArray();
+      let documents;
+      if (id == undefined) documents = this.collection.find({}).toArray();
+      else documents = this.collection.find({ id: id }).toArray();
+
       return documents;
     } catch (err) {
       throw err;

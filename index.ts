@@ -56,6 +56,8 @@ app.get("/callback", (req, res) => {
   };
 
   request.post(authReq, (err, res, bod) => {
+    if (err) return console.warn(err);
+
     const getProfile = {
       url: "https://api.spotify.com/v1/me",
       headers: {
@@ -63,16 +65,35 @@ app.get("/callback", (req, res) => {
       },
       json: true,
     };
+
     request.get(getProfile, (err, res, body) => {
-      console.log(body);
-      console.log(db);
-      db.insertData([
-        {
-          id: body.id,
-          name: body.name,
-          refresh_token: bod.refresh_token,
-        },
-      ]).then((res: any) => console.log(res));
+      if (err) return console.warn(err);
+
+      let userDoc = { // constructs user doc to be compared to existing data in db
+        id: body.id,
+        name: body.display_name,
+        refresh_token: bod.refresh_token,
+      }
+
+      console.log(userDoc)
+
+      db.listDocuments(userDoc.id).then((f: any) => {
+        console.log(f);
+        let comparator = f[0];
+        let userDocMod = delete userDoc['refresh_token'];
+        delete comparator['_id'];
+        delete comparator['refresh_token'];
+
+
+        // comparing 2 sets of data checks aren't working
+
+        if(comparator == userDocMod) {
+          return;
+        }
+        else {
+          db.insertData([userDoc])
+        }
+      });
     });
   });
 

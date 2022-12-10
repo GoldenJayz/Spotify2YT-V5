@@ -1,8 +1,8 @@
-export type callbackRes = {
+export interface callbackRes {
   req: {
     query?: {
-      code?: string;
-      state?: string;
-    };
-  };
-};
+      code?: string
+      state?: string
+    }
+  }
+}

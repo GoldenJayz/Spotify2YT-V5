@@ -1,8 +1,8 @@
-import Database from "./classes/Database";
+import Database from './classes/Database'
 
-const db = new Database("mongodb://127.0.0.1:27017", "users"); // Init Database
+const db = new Database('mongodb://127.0.0.1:27017', 'users') // Init Database
 
 db.listDocuments().then((data: any) => {
-  console.log(data);
-  db.close();
-});
+  console.log(data)
+  db.close()
+})

@@ -1,24 +1,27 @@
 import { readFileSync } from "fs";
 import request from "request";
 import Database from "../classes/Database";
+import { compareDBs } from "./DatabaseCalls";
 
 // Global Constants
 const config = readFileSync("./config.json");
-const data = JSON.parse(config.toString());
+export const data = JSON.parse(config.toString());
 const url = data.url;
 const colName = data.collections[0];
-const db = new Database(url, colName); // Init Database
+export const db = new Database(url, colName); // Init Database
 export const PORT = data.port;
 
 // Global Variables
 var bod: any;
+export var userDoc: any;
+export var profileFuncBody: any;
 
 // ------------------------------------------------------------
 //-----------------SPOTIFY AUTH CODE SECTION ------------------
 // ------------------------------------------------------------
 
 export const postSpotify = (req: any, res: any) => {
-  const clientId = data.spotify.client_id; // grabs client id fro   m config
+  const clientId = data.spotify.client_id; // grabs client id from config
   const scopes =
     "user-read-private user-read-email ugc-image-upload playlist-read-private playlist-read-collaborative";
 
@@ -29,6 +32,9 @@ export const postSpotify = (req: any, res: any) => {
   );
 };
 
+
+const getUserPlaylists = () => {};
+
 // ------------------------------------------------------------
 //---------------------CALLBACK SECTION -----------------------
 // ------------------------------------------------------------
@@ -38,8 +44,7 @@ export const callbackFunc = (req: any, res: any) => {
   const clientId = data.spotify.client_id;
   const clientSec = data.spotify.client_secret;
 
-  // if (req.query.error) return res.send(req.query.error);
-  // else if (req.query == null) return res.redirect(`http://localhost:${PORT}`); // mess with this later
+  if (req.query.code == null) return res.sendStatus(401);
 
   const authReq = {
     url: "https://accounts.spotify.com/api/token",
@@ -57,7 +62,7 @@ export const callbackFunc = (req: any, res: any) => {
 
   request.post(authReq, authReqPost);
 
-  return res.send('monkey');
+  return res.redirect('/');
 };
 
 const authReqPost = (err: any, res: any, body: any) => {
@@ -77,9 +82,10 @@ const authReqPost = (err: any, res: any, body: any) => {
 };
 
 const getProfileFunc = (err: any, res: any, body: any) => {
+  profileFuncBody = body;
   if (err) return console.warn(err);
 
-  const userDoc = {
+  userDoc = {
     // constructs user doc to be compared to existing data in db
     id: body.id,
     name: body.display_name,
@@ -88,16 +94,7 @@ const getProfileFunc = (err: any, res: any, body: any) => {
 
   console.log(userDoc);
 
-  db.listDocuments(userDoc.id).then((f: any) => {
-    const comparator = f[0];
-
-    if (comparator != null && userDoc != null) {
-      if (comparator.id === userDoc.id) {
-      } else {
-        db.insertData([userDoc]);
-      }
-    } else {
-      db.insertData([userDoc]);
-    }
-  });
+  db.listDocuments(userDoc.id).then(compareDBs);
 };
+
+// const getCurrentUserPlaylist = 

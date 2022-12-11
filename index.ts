@@ -7,9 +7,7 @@ import { callbackFunc, PORT, postSpotify } from "./Helpers/Spotify";
 
 const app = express();
 
-app.get("/", (req: any, res: any) => {
-  res.send("Hello World");
-});
+app.get("/", (req: any, res: any) => { res.send("Hello World"); });
 
 app.get("/postSpotify", postSpotify);
 

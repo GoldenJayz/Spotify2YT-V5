@@ -3,9 +3,9 @@ import { MongoClient } from 'mongodb'
 export default class Database {
   private readonly url: string
   private readonly colName: string
+  private readonly client: any
   private collection: any
   private db: any
-  private readonly client: any
 
   public constructor (url: string, colName: string) {
     this.url = url

@@ -92,7 +92,7 @@ const getProfileFunc = (err: any, res: any, body: any) => {
     refresh_token: bod.refresh_token,
   };
 
-  console.log(userDoc);
+  // console.log(userDoc);
 
   db.listDocuments(userDoc.id).then(compareDBs);
 };

@@ -21,14 +21,6 @@ export const compareDBs = (f: any) => {
     if (userDoc.id != null) db.insertData([userDoc]);
   }
 
-  // let playlistReq = {
-  //   uri: 'https://api.spotify.com/v1/me/playlists',
-  //   headers: {
-  //     Authorization: `Bearer ${}`
-  //   },
-  //   json: true
-  // }
-
   db.listDocuments(profileFuncBody.id).then(getUserCall);
 };
 
@@ -38,11 +30,15 @@ const getUserCall = (res: any) => {
   let accessTokenReq = {
     uri: "https://accounts.spotify.com/api/token",
     form: {
-        refresh_token: user.refresh_token,
-        grant_type: "refresh_token"
+      refresh_token: user.refresh_token,
+      grant_type: "refresh_token",
     },
     headers: {
-        Authorization: "Basic " + Buffer.from(data.spotify.client_id + ":" + data.spotify.client_secret).toString("base64")
+      Authorization:
+        "Basic " +
+        Buffer.from(
+          data.spotify.client_id + ":" + data.spotify.client_secret
+        ).toString("base64"),
     },
     json: true,
   };
@@ -51,7 +47,26 @@ const getUserCall = (res: any) => {
 }; // gets refresh token in order to renew access token
 
 const getAccessToken = (err: any, res: any, body: any) => {
-    console.log(body);
-    // use access token in order to get playlist and songs with it
-    // then construct a song object and dump it into an array
-}
+  // console.log(body);
+  // use access token in order to get playlist and songs with it
+  // then construct a song object and dump it into an array
+
+  let playlistReq = {
+    uri: "https://api.spotify.com/v1/me/playlists",
+    headers: {
+      Authorization: `Bearer ${body.access_token}`,
+    },
+    json: true,
+  };
+
+  request.get(playlistReq, playListReqCallback);
+};
+
+const playListReqCallback = (err: any, res: any, body: any) => {
+  let testPlaylistName = "metal bangers";
+  
+  console.log(body);
+  
+
+
+};

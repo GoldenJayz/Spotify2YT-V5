@@ -1,5 +1,15 @@
 {
-  "id": "1",
-  "name": "Test",
-  "refresh_token": "som random int"
+  "url": "mongodb://127.0.0.1:27017",
+  "collections": ["users"],
+  "port": 6969,
+  "spotify": {
+    "client_id": "",
+    "client_secret": "",
+    "redirect_uri": ""
+  },
+  "google": {
+    "client_id": "",
+    "client_secret": "",
+    "redirect_uri": ""
+  }
 }

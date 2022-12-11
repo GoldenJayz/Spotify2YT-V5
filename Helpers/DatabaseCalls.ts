@@ -52,4 +52,6 @@ const getUserCall = (res: any) => {
 
 const getAccessToken = (err: any, res: any, body: any) => {
     console.log(body);
+    // use access token in order to get playlist and songs with it
+    // then construct a song object and dump it into an array
 }

@@ -20,7 +20,7 @@ export default class Database {
       this.collection = this.db.collection(collectionName)
 
       return this.collection
-    } catch (err) {
+    } catch (err) {  
       console.error(`Exception while connecting to collection: ${err}`)
       throw err
     }

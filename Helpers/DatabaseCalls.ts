@@ -1,8 +1,9 @@
 import request from "request";
+import Song from "../classes/Song";
 import { userDoc, db, profileFuncBody, data } from "./Spotify";
 
-
-
+// Global Data
+var userSongs: any[] = [];
 var accessToken: any;
 
 // ---------------------------------------------
@@ -70,27 +71,37 @@ const getAccessToken = (err: any, res: any, body: any) => {
 
 const playListReqCallback = (err: any, res: any, body: any) => {
   let testPlaylistName = "metal bangers"; // test playlist name
-  
-  
+
   let playlists: playlist[] = body.items;
 
-
-  let playlist = playlists.find((playlist) => playlist.name === testPlaylistName); // finds playlist object with given name
+  let playlist = playlists.find(
+    (playlist) => playlist.name === testPlaylistName
+  ); // finds playlist object with given name
   if (playlist === undefined) return console.log("playlist not found");
-
 
   let playlistTrack = {
     uri: playlist.tracks.href,
     headers: {
-      Authorization: `Bearer ${accessToken}`
+      Authorization: `Bearer ${accessToken}`,
     },
-    json: true
-  }
+    json: true,
+  };
 
   request.get(playlistTrack, playlistTrackReq);
 };
 
-
 const playlistTrackReq = (err: any, res: any, body: any) => {
   console.log(body.items[0].track);
-}
+
+  for (let i = 0; i < body.items.length; i++) {
+    let track: songData = body.items[i].track;
+    let song: Song = new Song(
+      track.name,
+      track.artists[0].name,
+      track.album.name
+    );
+    userSongs.push(song.getSearchName());
+  }
+
+  console.log(userSongs);
+};

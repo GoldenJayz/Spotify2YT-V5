@@ -30,8 +30,25 @@ interface trackInfo {
 }
 
 interface songData {
-  album: string;
-
+  album: album;
+  artists: artist[];
+  available_markets: string[];
+  disc_number: number,
+  duration_ms: number,
+  episode: boolean,
+  explicit: boolean,
+  external_ids: object,
+  external_urls: object,
+  href: string,
+  id: string,
+  is_local: boolean,
+  name: string,
+  popularity: number,
+  preview_url: object,
+  track: boolean,
+  track_number: number,
+  type: string,
+  uri: string;
 }
 
 interface album {
@@ -45,6 +62,15 @@ interface album {
   release_date: string;
   release_Date_precision: string;
   total_tracks: number;
+  type: string;
+  uri: string;
+}
+
+interface artist {
+  external_urls: object;
+  href: string;
+  id: string;
+  name: string;
   type: string;
   uri: string;
 }

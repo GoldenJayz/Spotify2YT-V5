@@ -1,6 +1,10 @@
 import request from "request";
 import { userDoc, db, profileFuncBody, data } from "./Spotify";
 
+
+
+var accessToken: any;
+
 // ---------------------------------------------
 // --------------SPOTIFY DB CALLS---------------
 // ---------------------------------------------
@@ -51,6 +55,8 @@ const getAccessToken = (err: any, res: any, body: any) => {
   // use access token in order to get playlist and songs with it
   // then construct a song object and dump it into an array
 
+  accessToken = body.access_token;
+
   let playlistReq = {
     uri: "https://api.spotify.com/v1/me/playlists",
     headers: {
@@ -63,10 +69,28 @@ const getAccessToken = (err: any, res: any, body: any) => {
 };
 
 const playListReqCallback = (err: any, res: any, body: any) => {
-  let testPlaylistName = "metal bangers";
+  let testPlaylistName = "metal bangers"; // test playlist name
   
-  console.log(body);
   
+  let playlists: playlist[] = body.items;
 
 
+  let playlist = playlists.find((playlist) => playlist.name === testPlaylistName); // finds playlist object with given name
+  if (playlist === undefined) return console.log("playlist not found");
+
+
+  let playlistTrack = {
+    uri: playlist.tracks.href,
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    },
+    json: true
+  }
+
+  request.get(playlistTrack, playlistTrackReq);
 };
+
+
+const playlistTrackReq = (err: any, res: any, body: any) => {
+  console.log(body.items[0].track);
+}

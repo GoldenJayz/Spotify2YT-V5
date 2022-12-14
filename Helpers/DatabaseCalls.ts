@@ -3,7 +3,7 @@ import Song from "../classes/Song";
 import { userDoc, db, profileFuncBody, data } from "./Spotify";
 
 // Global Data
-var userSongs: any[] = [];
+export var userSongs: any[] = [];
 var accessToken: any;
 
 // ---------------------------------------------

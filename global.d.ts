@@ -74,3 +74,11 @@ interface artist {
   type: string;
   uri: string;
 }
+
+interface googleToken {
+  access_token: string;
+  refresh_token: string | null;
+  scope: string;
+  token_type: string;
+  expiry_date: number;
+}

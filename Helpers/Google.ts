@@ -24,5 +24,11 @@ console.log(reqUrl);
 
 export const googleCallback = (req: any, res: any) => {
   const code = req.query.code!;
-  client.getToken(code).then((res: any) => console.log(res));
+  client.getToken(code).then(getTokenRes);
+  return res.redirect('/');
 }
+
+const getTokenRes = (res: any) => {
+  console.info(res);
+}
+

@@ -3,9 +3,8 @@ import Song from "../classes/Song";
 import { userDoc, db, profileFuncBody, data } from "./Spotify";
 
 // Global Data
-export var userSongs: any[] = [];
+export var userSongs: any = {}
 var accessToken: any;
-var userSongs2: any = {  }
 // var userSongs2 = { 'id': [] } 
 
 
@@ -98,7 +97,7 @@ const playlistTrackReq = (err: any, res: any, body: any) => {
   let obj: any = {};
   obj[userId as keyof typeof obj] = [];
 
-  Object.assign(userSongs2, obj);
+  Object.assign(userSongs, obj);
 
   for (let i = 0; i < body.items.length; i++) {
     let track: songData = body.items[i].track;
@@ -107,10 +106,10 @@ const playlistTrackReq = (err: any, res: any, body: any) => {
       track.artists[0].name,
       track.album.name
     );
-    userSongs2[userId].push(song.getSearchName());
+    userSongs[userId].push(song.getSearchName());
   }
 
   // console.log(userSongs);
 
-  console.log(userSongs2)
+  console.log(userSongs)
 };

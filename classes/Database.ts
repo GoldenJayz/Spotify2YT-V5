@@ -16,7 +16,7 @@ export default class Database {
 
   public connect (collectionName: string) {
     try {
-      this.db = this.client.db('Spotify2Yt') // diff on home computer
+      this.db = this.client.db('Spotify2YT') // diff on home computer
       this.collection = this.db.collection(collectionName)
 
       return this.collection

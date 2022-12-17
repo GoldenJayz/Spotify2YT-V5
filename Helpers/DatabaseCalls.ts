@@ -5,6 +5,9 @@ import { userDoc, db, profileFuncBody, data } from "./Spotify";
 // Global Data
 export var userSongs: any[] = [];
 var accessToken: any;
+var userSongs2: any = {  }
+// var userSongs2 = { 'id': [] } 
+
 
 // ---------------------------------------------
 // --------------SPOTIFY DB CALLS---------------
@@ -29,7 +32,7 @@ export const compareDBs = (f: any) => {
   db.listDocuments(profileFuncBody.id).then(getUserCall);
 };
 
-const getUserCall = (res: any) => {
+const getUserCall = (res: any, userId: string) => {
   let user = res[0];
 
   let accessTokenReq = {
@@ -91,7 +94,11 @@ const playListReqCallback = (err: any, res: any, body: any) => {
 };
 
 const playlistTrackReq = (err: any, res: any, body: any) => {
-  console.log(body.items[0].track);
+  let userId = userDoc.id;
+  let obj: any = {};
+  obj[userId as keyof typeof obj] = [];
+
+  Object.assign(userSongs2, obj);
 
   for (let i = 0; i < body.items.length; i++) {
     let track: songData = body.items[i].track;
@@ -100,8 +107,10 @@ const playlistTrackReq = (err: any, res: any, body: any) => {
       track.artists[0].name,
       track.album.name
     );
-    userSongs.push(song.getSearchName());
+    userSongs2[userId].push(song.getSearchName());
   }
 
-  console.log(userSongs);
+  // console.log(userSongs);
+
+  console.log(userSongs2)
 };

@@ -1,6 +1,6 @@
 import { google } from "googleapis";
 import { userSongs } from "./DatabaseCalls";
-import { data } from "./Spotify";
+import { data, db } from "./Spotify";
 
 // Global Constants
 const client = new google.auth.OAuth2(
@@ -29,6 +29,10 @@ export const googleCallback = (req: any, res: any) => {
 }
 
 const getTokenRes = (res: any) => {
-  console.info(res);
+  let tokens: googleToken | null = res.tokens! != null ? res.tokens : null;
+  // check if user is in the database and then if not create new doc in database if yes add to their user doc
+  let usersInDb = db.listDocuments('do things');
+
+  console.log(tokens);
 }
 

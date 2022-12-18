@@ -15,6 +15,7 @@ export const PORT = data.port;
 var bod: any;
 export var userDoc: any;
 export var profileFuncBody: any;
+export var queue: any[] = [];
 
 // ------------------------------------------------------------
 //-----------------SPOTIFY AUTH CODE SECTION ------------------
@@ -93,7 +94,7 @@ const getProfileFunc = (err: any, res: any, body: any) => {
   };
 
   // console.log(userDoc);
-
+  queue.push(userDoc.id);
   db.listDocuments(userDoc.id).then(compareDBs);
 };
 

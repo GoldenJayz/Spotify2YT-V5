@@ -32,6 +32,7 @@ export const googleCallback = (req: any, res: any) => {
 
 const getTokenRes = (res: any) => {
   let tokens: googleToken | null = res.tokens! != null ? res.tokens : null;
+  console.log(tokens)
   // check if user is in the database and then if not create new doc in database if yes add to their user doc
   db.listDocuments(curUser).then((res: any) => console.log(res[0]));
 

@@ -1,4 +1,5 @@
 import { google } from "googleapis";
+const { authenticate } = require('@google-cloud/local-auth');
 import { userSongs } from "./DatabaseCalls";
 import { data, db, queue, userDoc } from "./Spotify";
 
@@ -37,29 +38,30 @@ export const googleCallback = (req: any, res: any) => {
 };
 
 const getTokenRes = (res: any) => {
-  let tokens: googleToken | null = res.tokens! != null ? res.tokens : null;
+  let tokens: googleToken = res.tokens! != null ? res.tokens : null;
   console.log(tokens)
   curUser = queue[0]
   console.log(queue)
 
   // check if user is in the database and then if not create new doc in database if yes add to their user doc
+  // dont need to check because if they are in the queue they are in the database
   db.listDocuments(curUser).then((res: any) => console.log(`Database: ${res[0]}`));
-  console.log(`Current User: ${curUser}`);
-  console.log(`Saved Copy: ${userDoc}`);
-  console.log(userDoc);
+
+  db.updateData(curUser, { google_refresh_token: tokens.refresh_token }).then((res: any) => console.log(res));
+
+  client.setCredentials(tokens);
 
 
-
-  // yt.playlists.insert({
-  //   part: ["snippet"],
-  //   requestBody: {
-  //     snippet: {
-  //       title: "test",
-  //       description: "test",
-  //     },
-  //   },
-  //   })
-  //   .then((res: any) => console.log(res.data));
+  yt.playlists.insert({
+    part: ["snippet"],
+    requestBody: {
+      snippet: {
+        title: "test",
+        description: "test",
+      },
+    },
+    })
+    .then((res: any) => console.log(res.data));
 
   // get token then use it to create playlist and dump songs into it.
   // console.log(tokens);

@@ -74,10 +74,10 @@ const getAccessToken = (err: any, res: any, body: any) => {
 const playListReqCallback = (err: any, res: any, body: any) => {
   let testPlaylistName = "metal bangers"; // test playlist name
 
-  let playlists: playlist[] = body.items;
+  let playlists = body.items;
 
   let playlist = playlists.find(
-    (playlist) => playlist.name === testPlaylistName
+    (playlist: any) => playlist.name === testPlaylistName
   ); // finds playlist object with given name
   if (playlist === undefined) return console.log("playlist not found");
 

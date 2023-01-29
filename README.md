@@ -6,4 +6,7 @@
     <li>Store in userPlaylist object in Helper file</li>
     <li>Insert each song inside the object</li>
     <li>Final create tests to make sure application works</li>
+    
+    
+    <li>Store tokens into db</li>
 </ol>

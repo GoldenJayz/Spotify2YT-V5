@@ -1,6 +1,6 @@
 import { google } from "googleapis";
 import { userSongs } from "./DatabaseCalls";
-import { data, db, queue } from "./Spotify";
+import { data, db, queue, userDoc } from "./Spotify";
 
 // Global Constants
 const client = new google.auth.OAuth2(
@@ -22,7 +22,7 @@ export const reqUrl = client.generateAuthUrl({
   include_granted_scopes: true,
 });
 
-const curUser: string = queue[0]; // get cur user off queue when done
+let curUser: string; // get cur user off queue when done
 
 console.log(reqUrl);
 
@@ -39,20 +39,27 @@ export const googleCallback = (req: any, res: any) => {
 const getTokenRes = (res: any) => {
   let tokens: googleToken | null = res.tokens! != null ? res.tokens : null;
   console.log(tokens)
+  curUser = queue[0]
+  console.log(queue)
 
   // check if user is in the database and then if not create new doc in database if yes add to their user doc
-  db.listDocuments(curUser).then((res: any) => console.log(res[0]));
+  db.listDocuments(curUser).then((res: any) => console.log(`Database: ${res[0]}`));
+  console.log(`Current User: ${curUser}`);
+  console.log(`Saved Copy: ${userDoc}`);
+  console.log(userDoc);
 
-  yt.playlists.insert({
-    part: ["snippet"],
-    requestBody: {
-      snippet: {
-        title: "test",
-        description: "test",
-      },
-    },
-    })
-    .then((res: any) => console.log(res.data));
+
+
+  // yt.playlists.insert({
+  //   part: ["snippet"],
+  //   requestBody: {
+  //     snippet: {
+  //       title: "test",
+  //       description: "test",
+  //     },
+  //   },
+  //   })
+  //   .then((res: any) => console.log(res.data));
 
   // get token then use it to create playlist and dump songs into it.
   // console.log(tokens);

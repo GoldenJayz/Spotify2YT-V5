@@ -37,7 +37,7 @@ const getUserCall = (res: any, userId: string) => {
   let accessTokenReq = {
     uri: "https://accounts.spotify.com/api/token",
     form: {
-      refresh_token: user.refresh_token,
+      refresh_token: user.spotify_refresh_token,
       grant_type: "refresh_token",
     },
     headers: {

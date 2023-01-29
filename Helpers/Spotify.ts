@@ -4,7 +4,7 @@ import Database from "../classes/Database";
 import { compareDBs } from "./DatabaseCalls";
 
 // Global Constants
-const config = readFileSync("./config.json");
+const config = readFileSync("./config.json"); // Change to ./build/config.json for build version debugging
 export const data = JSON.parse(config.toString());
 const url = data.url;
 const colName = data.collections[0];
@@ -90,7 +90,7 @@ const getProfileFunc = (err: any, res: any, body: any) => {
     // constructs user doc to be compared to existing data in db
     id: body.id,
     name: body.display_name,
-    refresh_token: bod.refresh_token,
+    spotify_refresh_token: bod.refresh_token,
   };
 
   // console.log(userDoc);

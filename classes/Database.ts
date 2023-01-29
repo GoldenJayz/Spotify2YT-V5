@@ -16,7 +16,7 @@ export default class Database {
 
   public connect (collectionName: string) {
     try {
-      this.db = this.client.db('Spotify2Yt') // diff on home computer
+      this.db = this.client.db('Spotify2YT') // diff on home computer Spotify2YT || Spotify2Yt
       this.collection = this.db.collection(collectionName)
 
       return this.collection
@@ -44,6 +44,18 @@ export default class Database {
     try {
       if (data.length > 1) res = this.collection.insertMany(data)
       else res = this.collection.insertOne(data[0])
+      return res
+    } catch (err) {
+      throw err
+    }
+  }
+
+  public updateData (id: string, data: object) {
+    let res: any
+    try {
+      const filter = { id: id }
+      const update = { $set: data }
+      res = this.collection.updateOne(filter, update)
       return res
     } catch (err) {
       throw err

@@ -52,16 +52,16 @@ const getTokenRes = (res: any) => {
   client.setCredentials(tokens);
 
 
-  yt.playlists.insert({
-    part: ["snippet"],
-    requestBody: {
-      snippet: {
-        title: "test",
-        description: "test",
-      },
-    },
-    })
-    .then((res: any) => console.log(res.data));
+  // yt.playlists.insert({
+  //   part: ["snippet"],
+  //   requestBody: {
+  //     snippet: {
+  //       title: "test",
+  //       description: "test",
+  //     },
+  //   },
+  //   })
+  //   .then((res: any) => console.log(res.data));
 
   // get token then use it to create playlist and dump songs into it.
   // console.log(tokens);

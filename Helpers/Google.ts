@@ -52,6 +52,10 @@ const getTokenRes = (res: any) => {
   client.setCredentials(tokens);
 
 
+  // then use youtube search api to search for the songs and get the links
+
+  
+
   // yt.playlists.insert({
   //   part: ["snippet"],
   //   requestBody: {

@@ -78,24 +78,27 @@ const playlistCreationRes = (res: any) => {
     part: ["snippet"],
     maxResults: 1,
     order: "relevance",
-    q: `${curUser}`,
+    q: `${userSongs[curUser][0]}`,
   }).then(dumpIntoPlaylist);
 };
 
 const dumpIntoPlaylist = (res: any) => {
   let id = res.data.items[0].id.videoId;
+  console.log(id);
 
+  // @ts-ignore
   yt.playlistItems.insert({
-    part: ["snippet"],
-    
-    requestBody: {
-      snippet: {
-        playlistId: playlistId,
-      },
-      resourceId: {
-        id: id,
-        kind: "youtube#playlistItem"
+    "part": [
+      "snippet"
+    ],
+    "resource": {
+      "snippet": {
+        "playlistId": playlistId,
+        "resourceId": {
+          "videoId": id,
+          "kind": "youtube#video"
+        }
       }
-    },
+    }
   });
 };

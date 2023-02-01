@@ -74,12 +74,16 @@ const getTokenRes = (res: any) => {
 const playlistCreationRes = (res: any) => {
   playlistId = res.data.id; // Users playlist id that was just created
 
-  yt.search.list({
-    part: ["snippet"],
-    maxResults: 1,
-    order: "relevance",
-    q: `${userSongs[curUser][0]}`,
-  }).then(dumpIntoPlaylist);
+  for (let i = 0; i < userSongs[curUser].length; i++) {
+    setTimeout(() => {
+      yt.search.list({
+        part: ["snippet"],
+        maxResults: 1,
+        order: "relevance",
+        q: `${userSongs[curUser][i]}`,
+      }).then(dumpIntoPlaylist);
+    }, 1500);
+  }
 };
 
 const dumpIntoPlaylist = (res: any) => {

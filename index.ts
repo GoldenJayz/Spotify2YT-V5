@@ -1,5 +1,7 @@
 /*
- * Maybe use Bun?
+ Use bun
+ Use React for frontend
+ api maybe?
  */
 
 import express from "express";

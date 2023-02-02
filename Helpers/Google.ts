@@ -76,12 +76,13 @@ const playlistCreationRes = (res: any) => {
 
   for (let i = 0; i < userSongs[curUser].length; i++) {
     setTimeout(() => {
-      yt.search.list({
-        part: ["snippet"],
-        maxResults: 1,
-        order: "relevance",
-        q: `${userSongs[curUser][i]}`,
-      }).then(dumpIntoPlaylist);
+      console.log(userSongs[curUser][i])
+      // yt.search.list({
+      //   part: ["snippet"],
+      //   maxResults: 1,
+      //   order: "relevance",
+      //   q: `${userSongs[curUser][i]}`,
+      // }).then(dumpIntoPlaylist);
     }, 1500);
   }
 };

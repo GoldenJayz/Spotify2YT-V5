@@ -4,19 +4,21 @@ export default class Database {
   private readonly url: string
   private readonly colName: string
   private readonly client: any
+  private readonly dbName;
   private collection: any
   private db: any
 
-  public constructor (url: string, colName: string) {
+  public constructor (url: string, colName: string, dbName: string) {
     this.url = url
     this.colName = colName
+    this.dbName = dbName
     this.client = new MongoClient(this.url)
     this.connect(this.colName)
   }
 
   public connect (collectionName: string) {
     try {
-      this.db = this.client.db('Spotify2Yt') // diff on home computer Spotify2YT || Spotify2Yt
+      this.db = this.client.db(this.dbName) // diff on home computer Spotify2YT || Spotify2Yt
       this.collection = this.db.collection(collectionName)
 
       return this.collection

@@ -2,6 +2,7 @@
   "url": "mongodb://127.0.0.1:27017",
   "collections": ["users"],
   "port": 6969,
+  "db_name": "",
   "spotify": {
     "client_id": "",
     "client_secret": "",

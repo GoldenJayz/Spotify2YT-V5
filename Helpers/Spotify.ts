@@ -8,7 +8,8 @@ const config = readFileSync("./config.json"); // Change to ./build/config.json f
 export const data = JSON.parse(config.toString());
 const url = data.url;
 const colName = data.collections[0];
-export const db = new Database(url, colName); // Init Database
+const databaseName = data.db_name;
+export const db = new Database(url, colName, databaseName); // Init Database
 export const PORT = data.port;
 
 // Global Variables

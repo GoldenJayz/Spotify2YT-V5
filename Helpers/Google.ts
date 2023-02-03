@@ -83,7 +83,7 @@ const playlistCreationRes = (res: any) => {
       //   order: "relevance",
       //   q: `${userSongs[curUser][i]}`,
       // }).then(dumpIntoPlaylist);
-    }, 1500);
+    }, 1500*i);
   }
 };
 

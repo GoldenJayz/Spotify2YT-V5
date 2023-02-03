@@ -2,6 +2,7 @@
  Use bun
  Use React for frontend
  api maybe?
+ maybe next js
  */
 
 import express from "express";

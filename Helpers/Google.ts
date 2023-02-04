@@ -74,7 +74,7 @@ const getTokenRes = (res: any) => {
 const playlistCreationRes = (res: any) => {
   playlistId = res.data.id; // Users playlist id that was just created
 
-  for (let i = 0; i < 5; i++) { // userSongs[curUser].length 5 is for testing it so it doesnt burn all my quota
+  for (let i = 0; i < 5; i++) { // userSongs[curUser].length 5 is for testing it so it doesn't burn all my quota
     setTimeout(() => {
       // console.log(userSongs[curUser][i])
       yt.search.list({

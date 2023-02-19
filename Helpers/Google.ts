@@ -35,6 +35,9 @@ console.log(reqUrl);
 
 export const googleCallback = (req: any, res: any) => {
   const code = req.query.code!;
+  if (code == undefined) {
+    return res.status(400).send("No code provided");
+  }
   client.getToken(code).then(getTokenRes);
   return res.redirect("/");
 };

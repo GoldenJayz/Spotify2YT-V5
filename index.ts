@@ -11,7 +11,9 @@ import { reqUrl, googleCallback } from "./Helpers/Google";
 
 const app = express();
 
-app.get("/", (req: any, res: any) => { res.send("Hello World"); });
+app.use(express.static("public"));
+
+app.get("/", (req: any, res: any) => { res.sendFile(__dirname + "/views/index.html"); });
 
 app.get("/postSpotify", postSpotify);
 

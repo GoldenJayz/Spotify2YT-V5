@@ -83,10 +83,46 @@ a.nav-link {
 /* Home Container Styling */
 
 #homeContainer > .row {
-    margin-left: 25%;
-    margin-right: 25%;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 #homeContainer > .row > .col > p {
-    font-size: 30px;
+    font-size: 25px;
+}
+
+/* About Container Styling */
+
+#aboutContainer {
+  background-color: #e3e3e3;
+}
+
+#aboutContainer > .row {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+#aboutContainer > .row > .col > p {
+  font-size: 25px;
+}
+
+/* Convert Container Styles */
+
+#convert > .row > .col {
+  text-align: center;
+}
+
+#convert > .row > .col > ol {
+  display: inline-block;
+  text-align: left;
+}
+
+#spotifyURI {
+  width: 30% !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.alert {
+  margin: 0 !important;
 }

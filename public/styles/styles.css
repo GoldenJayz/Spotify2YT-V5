@@ -65,6 +65,19 @@ a.nav-link {
     justify-content: center;
     align-content: center;
   }
+  
+  #banner {
+    justify-content: center;
+    align-content: center;
+  }
+
+  #banner > .row > .col:nth-of-type(2) {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+  }
 }
 
 /* Home Container Styling */

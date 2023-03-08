@@ -1,6 +1,6 @@
 import request from "request";
 import Song from "../classes/Song";
-import { userDoc, db, profileFuncBody, data } from "./Spotify";
+import { userDoc, db, profileFuncBody, data, userPlaylistName } from "./Spotify";
 
 // Global Data
 export var userSongs: any = {}
@@ -72,7 +72,8 @@ const getAccessToken = (err: any, res: any, body: any) => {
 };
 
 const playListReqCallback = (err: any, res: any, body: any) => {
-  let testPlaylistName = "metal bangers"; // test playlist name
+  // let testPlaylistName = "metal bangers"; // test playlist name
+  let testPlaylistName = userPlaylistName;
 
   let playlists: playlist[] = body.items;
 

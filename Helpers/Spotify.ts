@@ -11,6 +11,7 @@ const colName = data.collections[0];
 const databaseName = data.db_name;
 export const db = new Database(url, colName, databaseName); // Init Database
 export const PORT = data.port;
+export var userPlaylistName = "";
 
 // Global Variables
 var bod: any;
@@ -23,6 +24,8 @@ export var queue: any[] = [];
 // ------------------------------------------------------------
 
 export const postSpotify = (req: any, res: any) => {
+  userPlaylistName = req.query.url;
+  console.log(req.query.url);
   const clientId = data.spotify.client_id; // grabs client id from config
   const scopes =
     "user-read-private user-read-email ugc-image-upload playlist-read-private playlist-read-collaborative";

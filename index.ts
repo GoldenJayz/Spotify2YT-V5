@@ -22,6 +22,6 @@ app.get("/callback", callbackFunc);
 app.get("/googleCallback", googleCallback)
 
 app.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}/postSpotify`);
+  console.log(`http://localhost:${PORT}/`);
   console.log(reqUrl);
 });

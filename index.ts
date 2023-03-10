@@ -19,7 +19,9 @@ app.get("/postSpotify", postSpotify);
 
 app.get("/callback", callbackFunc);
 
-app.get("/googleCallback", googleCallback)
+app.get("/googleCallback", googleCallback);
+
+app.get("/redirectToGoogle"); // add callback func
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}/`);

@@ -67,7 +67,7 @@ export const callbackFunc = (req: any, res: any) => {
 
   request.post(authReq, authReqPost);
 
-  return res.redirect('/');
+  return res.redirect('/'); // Change to the google OAuth2 redirect
 };
 
 const authReqPost = (err: any, res: any, body: any) => {

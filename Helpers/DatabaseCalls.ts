@@ -1,6 +1,8 @@
 import request from "request";
 import Song from "../classes/Song";
 import { userDoc, db, profileFuncBody, data, userPlaylistName } from "./Spotify";
+import { link } from "../index";
+
 
 // Global Data
 export var userSongs: any = {}
@@ -110,7 +112,9 @@ const playlistTrackReq = (err: any, res: any, body: any) => {
     userSongs[userId].push(song.getSearchName());
   }
 
-  // console.log(userSongs);
-
   console.log(userSongs)
+  
+  // Convert to variable link instead of string
+  console.log(link + " From database clals");
+  request.post(link + "/googleCallback", { json: { ready: true }});
 };

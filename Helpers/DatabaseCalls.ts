@@ -116,5 +116,5 @@ const playlistTrackReq = (err: any, res: any, body: any) => {
   
   // Convert to variable link instead of string
   console.log(link + " From database clals");
-  request.post(link + "/googleCallback", { json: { ready: true }});
+  request.get(link + "redirectToGoogle");
 };

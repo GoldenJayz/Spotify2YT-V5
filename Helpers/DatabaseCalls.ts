@@ -117,4 +117,5 @@ const playlistTrackReq = (err: any, res: any, body: any) => {
   // Convert to variable link instead of string
   console.log(link + " From database clals");
   request.get(link + "redirectToGoogle");
+  // Store the express res param in a global var
 };

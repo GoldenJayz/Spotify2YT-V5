@@ -4,6 +4,7 @@ const { authenticate } = require("@google-cloud/local-auth");
 import { userSongs } from "./DatabaseCalls";
 import { data, db, queue, userDoc } from "./Spotify";
 
+
 // Global Constants
 const client = new google.auth.OAuth2(
   data.google.client_id,
@@ -33,10 +34,16 @@ console.log(reqUrl);
 // --------------------CALLBACK SECTION -----------------------
 // ------------------------------------------------------------
 
+// Check if data is in db then wait until it is in there
+
 export const googleCallback = (req: any, res: any) => {
   const code = req.query.code!;
   if (code == undefined) {
     return res.status(400).send("No code provided");
+  }
+
+  while (userSongs == null) {
+    setTimeout(() => {}, 1000);
   }
   client.getToken(code).then(getTokenRes);
   return res.redirect("/");

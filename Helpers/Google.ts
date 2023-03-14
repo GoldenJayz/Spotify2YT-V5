@@ -42,9 +42,6 @@ export const googleCallback = (req: any, res: any) => {
     return res.status(400).send("No code provided");
   }
 
-  while (userSongs == null) {
-    setTimeout(() => {}, 1000);
-  }
   client.getToken(code).then(getTokenRes);
   return res.redirect("/");
 };
@@ -52,6 +49,15 @@ export const googleCallback = (req: any, res: any) => {
 const getTokenRes = (res: any) => {
   let tokens: googleToken = res.tokens! != null ? res.tokens : null;
   curUser = queue[0];
+
+  while (curUser == undefined || userSongs == undefined) {
+    curUser = queue[0];
+    if (curUser != undefined) {
+      console.log(curUser + " curuser logged");
+      break;
+    }
+    
+  }
 
   db.listDocuments(curUser).then((res: any) =>
     console.log(`Database: ${res[0]}`)

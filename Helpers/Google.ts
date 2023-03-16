@@ -27,6 +27,7 @@ export const reqUrl = client.generateAuthUrl({
 
 let curUser: string; // get cur user off queue when done
 let playlistId: string;
+let response: any;
 
 console.log(reqUrl);
 
@@ -41,9 +42,10 @@ export const googleCallback = (req: any, res: any) => {
   if (code == undefined) {
     return res.status(400).send("No code provided");
   }
+  response = res;
 
   client.getToken(code).then(getTokenRes);
-  return res.redirect("/");
+  // return res.redirect("/"); // Not redirecting for now
 };
 
 const getTokenRes = (res: any) => {
@@ -101,6 +103,8 @@ const playlistCreationRes = (res: any) => {
       }).then(dumpIntoPlaylist);
     }, 1500*i);
   }
+
+  return response.redirect("/");
 };
 
 const dumpIntoPlaylist = (res: any) => {

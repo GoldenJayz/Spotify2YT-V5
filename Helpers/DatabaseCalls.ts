@@ -5,9 +5,9 @@ import { link } from "../index";
 
 
 // Global Data
-export var userSongs: any = {}
-var accessToken: any;
-// var userSongs2 = { 'id': [] } 
+export const userSongs: any = {};
+let accessToken: any;
+// let userSongs2 = { 'id': [] } 
 
 
 // ---------------------------------------------
@@ -15,107 +15,106 @@ var accessToken: any;
 // ---------------------------------------------
 
 export const compareDBs = (f: any) => {
-  let comparator = f[0];
-  if (comparator == undefined) comparator = {};
+	let comparator = f[0];
+	if (comparator == undefined) comparator = {};
 
-  // maybe check earlier so it doesnt do all this processing?
+	// maybe check earlier so it doesnt do all this processing?
 
-  // if first searched entry is not blank then check if it is same so it doesnt add a dupe into the db
-  if (comparator.id != null && userDoc.id != null) {
-    if (comparator.id === userDoc.id) {
-    } else {
-      db.insertData([userDoc]);
-    }
-  } else {
-    if (userDoc.id != null) db.insertData([userDoc]);
-  }
+	// if first searched entry is not blank then check if it is same so it doesnt add a dupe into the db
+	if (comparator.id != null && userDoc.id != null) {
+		if (comparator.id === userDoc.id) {
+			console.log("user already in db");
+		} else {
+			db.insertData([userDoc]);
+		}
+	} else {
+		if (userDoc.id != null) db.insertData([userDoc]);
+	}
 
-  db.listDocuments(profileFuncBody.id).then(getUserCall);
+	db.listDocuments(profileFuncBody.id).then(getUserCall);
 };
 
 const getUserCall = (res: any, userId: string) => {
-  let user = res[0];
+	const user = res[0];
 
-  let accessTokenReq = {
-    uri: "https://accounts.spotify.com/api/token",
-    form: {
-      refresh_token: user.spotify_refresh_token,
-      grant_type: "refresh_token",
-    },
-    headers: {
-      Authorization:
+	const accessTokenReq = {
+		uri: "https://accounts.spotify.com/api/token",
+		form: {
+			refresh_token: user.spotify_refresh_token,
+			grant_type: "refresh_token",
+		},
+		headers: {
+			Authorization:
         "Basic " +
-        Buffer.from(
-          data.spotify.client_id + ":" + data.spotify.client_secret
-        ).toString("base64"),
-    },
-    json: true,
-  };
+        Buffer.from(data.spotify.client_id + ":" + data.spotify.client_secret).toString("base64"),
+		},
+		json: true,
+	};
 
-  request.post(accessTokenReq, getAccessToken);
+	request.post(accessTokenReq, getAccessToken);
 }; // gets refresh token in order to renew access token
 
 const getAccessToken = (err: any, res: any, body: any) => {
-  // console.log(body);
-  // use access token in order to get playlist and songs with it
-  // then construct a song object and dump it into an array
+	// console.log(body);
+	// use access token in order to get playlist and songs with it
+	// then construct a song object and dump it into an array
 
-  accessToken = body.access_token;
+	accessToken = body.access_token;
 
-  let playlistReq = {
-    uri: "https://api.spotify.com/v1/me/playlists",
-    headers: {
-      Authorization: `Bearer ${body.access_token}`,
-    },
-    json: true,
-  };
+	const playlistReq = {
+		uri: "https://api.spotify.com/v1/me/playlists",
+		headers: {
+			Authorization: `Bearer ${body.access_token}`,
+		},
+		json: true,
+	};
 
-  request.get(playlistReq, playListReqCallback);
+	request.get(playlistReq, playListReqCallback);
 };
 
 const playListReqCallback = (err: any, res: any, body: any) => {
-  // let testPlaylistName = "metal bangers"; // test playlist name
-  let testPlaylistName = userPlaylistName;
+	// let testPlaylistName = "metal bangers"; // test playlist name
+	const testPlaylistName = userPlaylistName;
 
-  let playlists: playlist[] = body.items;
+	const playlists: playlist[] = body.items;
 
-  let playlist = playlists.find(
-    (playlist) => playlist.name === testPlaylistName
-  ); // finds playlist object with given name
-  if (playlist === undefined) return console.log("playlist not found");
+	const playlist = playlists.find(
+		(playlist) => playlist.name === testPlaylistName
+	); // finds playlist object with given name
+	if (playlist === undefined) return console.log("playlist not found");
 
-  let playlistTrack = {
-    uri: playlist.tracks.href,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    json: true,
-  };
+	const playlistTrack = {
+		uri: playlist.tracks.href,
+		headers: {
+			Authorization: `Bearer ${accessToken}`,
+		},
+		json: true,
+	};
 
-  request.get(playlistTrack, playlistTrackReq);
+	request.get(playlistTrack, playlistTrackReq);
 };
 
 const playlistTrackReq = (err: any, res: any, body: any) => {
-  let userId = userDoc.id;
-  let obj: any = {};
-  obj[userId as keyof typeof obj] = [];
+	const userId = userDoc.id;
+	const obj: any = {};
+	obj[userId as keyof typeof obj] = [];
 
-  Object.assign(userSongs, obj);
+	Object.assign(userSongs, obj);
 
-  for (let i = 0; i < body.items.length; i++) {
-    let track: songData = body.items[i].track;
-    let song: Song = new Song(
-      track.name,
-      track.artists[0].name,
-      track.album.name
-    );
-    userSongs[userId].push(song.getSearchName());
-  }
+	for (let i = 0; i < body.items.length; i++) {
+		const track: songData = body.items[i].track;
+		const song: Song = new Song(
+			track.name,
+			track.artists[0].name,
+			track.album.name
+		);
+		userSongs[userId].push(song.getSearchName());
+	}
 
-  console.log(userSongs)
+	console.log(userSongs);
   
-  // Convert to variable link instead of string
-  console.log(link + " From database clals");
-  request.get(link + "redirectToGoogle");
-  // Store the express res param in a global var
+	// Convert to letiable link instead of string
+	console.log(link + " From database clals");
+	request.get(link + "redirectToGoogle");
+	// Store the express res param in a global let
 };

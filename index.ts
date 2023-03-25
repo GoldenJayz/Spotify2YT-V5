@@ -24,10 +24,10 @@ app.get("/callback", callbackFunc);
 app.get("/googleCallback", googleCallback);
 
 app.get("/redirectToGoogle", (req: any, res: any) => {
-  return res.redirect("/googleCallback");
+	return res.redirect("/googleCallback");
 }); // add callback func
 
 app.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}/`); // Store link in variable and export it for DatabaseCalls.ts
-  console.log(reqUrl);
+	console.log(`http://localhost:${PORT}/`); // Store link in variable and export it for DatabaseCalls.ts
+	console.log(reqUrl);
 });

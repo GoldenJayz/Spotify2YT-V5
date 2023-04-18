@@ -3,7 +3,6 @@ import request from "request";
 import Database from "../classes/Database";
 import { compareDBs } from "./DatabaseCalls";
 import { reqUrl } from "./Google";
-import { reqUrl } from "./Google";
 
 // Global Constants
 const config = readFileSync("./config.json"); // Change to ./build/config.json for build version debugging
@@ -76,9 +75,7 @@ export const callbackFunc = (req: any, res: any) => {
 
 const authReqPost = (err: any, res: any, body: any) => {
 	if (err) return console.warn(err);
-	if (err) return console.warn(err);
 
-	bod = body;
 	bod = body;
 
 	const getProfile = {

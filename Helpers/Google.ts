@@ -27,7 +27,6 @@ let curUser: string; // get cur user off queue when done
 let playlistId: string;
 let response: any;
 
-console.log(reqUrl);
 
 // ------------------------------------------------------------
 // --------------------CALLBACK SECTION -----------------------

@@ -12,13 +12,11 @@ const databaseName = data.db_name;
 export const db = new Database(url, colName, databaseName); // Init Database
 export const PORT = data.port;
 export const URL = data.base_url;
+export const queue: any[] = [];
 export let userPlaylistName = "";
-
-// Global letiables
-let bod: any;
 export let userDoc: any;
 export let profileFuncBody: any;
-export const queue: any[] = [];
+let bod: any;
 
 // ------------------------------------------------------------
 //-----------------SPOTIFY AUTH CODE SECTION ------------------
@@ -37,7 +35,6 @@ export const postSpotify = (req: any, res: any) => {
 		}&redirect_uri=${encodeURIComponent("https://chickennugget.ga/callback")}`
 	);
 };
-
 
 
 // ------------------------------------------------------------

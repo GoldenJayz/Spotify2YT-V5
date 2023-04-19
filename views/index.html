@@ -99,17 +99,15 @@
           <p class="text-center">To convert your Spotify playlist to a YouTube playlist, simply follow the steps below:</p>
           <ol>
             <li>Go to your Spotify playlist</li>
-            <li>Click the "..." button in the top right corner</li>
-            <li>Click "Share"</li>
-            <li>Click "Copy Spotify URI"</li>
-            <li>Paste the URI into the box below</li>
+            <li>Copy the playlist name</li>
+            <li>Paste into input box</li>
             <li>Click "Convert"</li>
           </ol>
           <form action="/postSpotify">
             <div class="form-group">
-              <label for="spotifyURI">Spotify URI</label>
-              <input type="text" class="form-control" id="spotifyURI" aria-describedby="spotifyURIHelp" placeholder="Enter Spotify URI" name="url">
-              <small id="spotifyURIHelp" class="form-text text-muted">Enter the Spotify URI of your playlist here.</small>
+              <label for="spotifyURI">Spotify Playlist Name</label>
+              <input type="text" class="form-control" id="spotifyURI" aria-describedby="spotifyURIHelp" placeholder="Enter Spotify playlist name" name="url">
+              <small id="spotifyURIHelp" class="form-text text-muted">Enter the Spotify playlist name.</small>
             </div>
             <button type="submit" class="btn btn-primary">Convert</button>
             <br>

@@ -78,6 +78,10 @@ a.nav-link {
     align-items: center;
     height: 30vh;
   }
+
+  #mainText {
+    font-size: 400%;
+  }
 }
 
 /* Home Container Styling */

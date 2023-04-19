@@ -7,7 +7,7 @@
  */
 
 import express from "express";
-import { callbackFunc, PORT, postSpotify } from "./Helpers/Spotify";
+import { callbackFunc, PORT, postSpotify, URL } from "./Helpers/Spotify";
 import { reqUrl, googleCallback } from "./Helpers/Google";
  
 const app = express();
@@ -27,7 +27,7 @@ app.get("/redirectToGoogle", (req: any, res: any) => {
 }); // add callback func
  
 app.listen(PORT, () => {
-	console.log("https://chickennugget.ga/"); // Store link in variable and export it for DatabaseCalls.ts
+	console.log(URL); // Store link in variable and export it for DatabaseCalls.ts
 	console.log(reqUrl);
 });
  

@@ -32,7 +32,7 @@ export const postSpotify = (req: any, res: any) => {
 	return res.redirect(
 		`https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}${
 			scopes ? "&scope=" + encodeURIComponent(scopes) : ""
-		}&redirect_uri=${encodeURIComponent("https://chickennugget.ga/callback")}`
+		}&redirect_uri=${encodeURIComponent(URL + "callback")}`
 	);
 };
 
@@ -52,7 +52,7 @@ export const callbackFunc = (req: any, res: any) => {
 		url: "https://accounts.spotify.com/api/token",
 		form: {
 			code,
-			redirect_uri: "https://chickennugget.ga/callback",
+			redirect_uri: URL + "callback",
 			grant_type: "authorization_code",
 		},
 		headers: {
@@ -64,6 +64,7 @@ export const callbackFunc = (req: any, res: any) => {
 
 	request.post(authReq, authReqPost);
 
+	// Replace this line with a variable with the auth link
 	return res.redirect("https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube&include_granted_scopes=true&response_type=code&client_id=711059180289-57k8rlk7uod65m3iilgmvsio1u1otv04.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fchickennugget.ga%2FgoogleCallback"); // Change to the google OAuth2 redirect
 };
 

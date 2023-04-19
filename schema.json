@@ -1,4 +1,5 @@
 {
+  "base_url": "http://localhost:6969/",
   "url": "mongodb://127.0.0.1:27017",
   "collections": ["users"],
   "port": 6969,

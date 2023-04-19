@@ -55,7 +55,6 @@ const getTokenRes = (res: any) => {
 			console.log(curUser + " curuser logged");
 			break;
 		}
-    
 	}
 
 	db.listDocuments(curUser).then((res: any) =>

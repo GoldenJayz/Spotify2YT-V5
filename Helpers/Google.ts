@@ -1,27 +1,6 @@
-import { google } from "googleapis";
 import { userSongs } from "./DatabaseCalls";
-import { data, db, queue } from "./Spotify";
+import { client, db, queue, yt } from "./Spotify";
 
-
-// Global Constants
-const client = new google.auth.OAuth2(
-	data.google.client_id,
-	data.google.client_secret,
-	data.google.redirect_uri
-);
-
-const yt = google.youtube({
-	version: "v3",
-	auth: client,
-});
-
-const scopes = ["https://www.googleapis.com/auth/youtube"];
-
-export const reqUrl = client.generateAuthUrl({
-	access_type: "offline",
-	scope: scopes,
-	include_granted_scopes: true,
-});
 
 let curUser: string; // get cur user off queue when done
 let playlistId: string;

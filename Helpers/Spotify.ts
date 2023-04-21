@@ -2,6 +2,8 @@ import { readFileSync } from "fs";
 import request from "request";
 import Database from "../classes/Database";
 import { compareDBs } from "./DatabaseCalls";
+import { google } from "googleapis";
+
 
 // Global Constants
 const config = readFileSync("./config.json"); // Change to ./build/config.json for build version debugging
@@ -17,6 +19,28 @@ export let userPlaylistName = "";
 export let userDoc: any;
 export let profileFuncBody: any;
 let bod: any;
+
+
+// Global Constants
+export const client = new google.auth.OAuth2(
+	data.google.client_id,
+	data.google.client_secret,
+	data.google.redirect_uri
+);
+
+export const yt = google.youtube({
+	version: "v3",
+	auth: client,
+});
+
+const scopes = ["https://www.googleapis.com/auth/youtube"];
+
+export const reqUrl = client.generateAuthUrl({
+	access_type: "offline",
+	scope: scopes,
+	include_granted_scopes: true,
+});
+
 
 // ------------------------------------------------------------
 //-----------------SPOTIFY AUTH CODE SECTION ------------------
@@ -65,7 +89,7 @@ export const callbackFunc = (req: any, res: any) => {
 	request.post(authReq, authReqPost);
 
 	// Replace this line with a variable with the auth link
-	return res.redirect("https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube&include_granted_scopes=true&response_type=code&client_id=711059180289-57k8rlk7uod65m3iilgmvsio1u1otv04.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fchickennugget.ga%2FgoogleCallback"); // Change to the google OAuth2 redirect
+	return res.redirect(reqUrl); // Change to the google OAuth2 redirect
 };
 
 const authReqPost = (err: any, res: any, body: any) => {

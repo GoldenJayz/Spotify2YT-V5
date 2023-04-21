@@ -3,12 +3,12 @@
  Use React for frontend
  api maybe?
  maybe next js
- Put proper URIs for redirects based off config file
+ Put all the configurations into index.js
  */
 
 import express from "express";
-import { callbackFunc, PORT, postSpotify, URL } from "./Helpers/Spotify";
-import { reqUrl, googleCallback } from "./Helpers/Google";
+import { callbackFunc, PORT, postSpotify, reqUrl, URL } from "./Helpers/Spotify";
+import { googleCallback } from "./Helpers/Google";
  
 const app = express();
  

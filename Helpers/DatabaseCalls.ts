@@ -36,9 +36,9 @@ export const compareDBs = (f: any) => {
 };
 
 const getUserCall = (res: any, userId: string) => {
-	let user = res[0];
+	const user = res[0];
 
-	let accessTokenReq = {
+	const accessTokenReq = {
 		uri: "https://accounts.spotify.com/api/token",
 		form: {
 			refresh_token: user.spotify_refresh_token,
@@ -62,7 +62,7 @@ const getAccessToken = (err: any, res: any, body: any) => {
 
 	accessToken = body.access_token;
 
-	let playlistReq = {
+	const playlistReq = {
 		uri: "https://api.spotify.com/v1/me/playlists",
 		headers: {
 			Authorization: `Bearer ${body.access_token}`,
@@ -75,16 +75,16 @@ const getAccessToken = (err: any, res: any, body: any) => {
 
 const playListReqCallback = (err: any, res: any, body: any) => {
 	// let testPlaylistName = "metal bangers"; // test playlist name
-	let testPlaylistName = userPlaylistName;
+	const testPlaylistName = userPlaylistName;
 
-	let playlists: playlist[] = body.items;
+	const playlists: playlist[] = body.items;
 
-	let playlist = playlists.find(
+	const playlist = playlists.find(
 		(playlist) => playlist.name === testPlaylistName
 	); // finds playlist object with given name
 	if (playlist === undefined) return logger.warn("playlist not found");
 
-	let playlistTrack = {
+	const playlistTrack = {
 		uri: playlist.tracks.href,
 		headers: {
 			Authorization: `Bearer ${accessToken}`,

@@ -14,6 +14,8 @@
     <li>Have proper URI's based off of Config file</li>
     <li>Organize/Refactor Code</li>
     <li>Add more typings</li>
+    <li>Add logging</li>
+    <li>Maybe remove circular imports</li>
 </ol>
 
 # Contributing

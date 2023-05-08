@@ -9,7 +9,9 @@
 import express from "express";
 import { callbackFunc, PORT, postSpotify, reqUrl, URL } from "./Helpers/Spotify";
 import { googleCallback } from "./Helpers/Google";
- 
+import { Logger } from "tslog";
+
+const logger = new Logger({ name: "Index" }); 
 const app = express();
  
 app.use(express.static("public"));
@@ -27,7 +29,6 @@ app.get("/redirectToGoogle", (req: any, res: any) => {
 }); // add callback func
  
 app.listen(PORT, () => {
-	console.log(URL); // Store link in variable and export it for DatabaseCalls.ts
-	console.log(reqUrl);
+	logger.silly(URL); // Store link in variable and export it for DatabaseCalls.ts
 });
  

@@ -1,7 +1,9 @@
 import request from "request";
 import Song from "../classes/Song";
 import { userDoc, db, profileFuncBody, data, userPlaylistName, URL } from "./Spotify";
+import { Logger } from "tslog";
 
+const logger = new Logger({ name: "DatabaseCalls" });
 
 // Global Data
 export const userSongs: any = {};
@@ -22,7 +24,7 @@ export const compareDBs = (f: any) => {
 	// if first searched entry is not blank then check if it is same so it doesnt add a dupe into the db
 	if (comparator.id != null && userDoc.id != null) {
 		if (comparator.id === userDoc.id) {
-			console.log("user already in db");
+			logger.info("user already in db");
 		} else {
 			db.insertData([userDoc]);
 		}
@@ -80,7 +82,7 @@ const playListReqCallback = (err: any, res: any, body: any) => {
 	let playlist = playlists.find(
 		(playlist) => playlist.name === testPlaylistName
 	); // finds playlist object with given name
-	if (playlist === undefined) return console.log("playlist not found");
+	if (playlist === undefined) return logger.warn("playlist not found");
 
 	let playlistTrack = {
 		uri: playlist.tracks.href,
@@ -110,10 +112,10 @@ const playlistTrackReq = (err: any, res: any, body: any) => {
 		userSongs[userId].push(song.getSearchName());
 	}
 
-	console.log(userSongs);
+	// logger.info(userSongs);
   
 	// Convert to letiable link instead of string
-	console.log(URL + " From database clals");
+	logger.info(URL + " From database clals");
 	request.get(URL + "redirectToGoogle");
 	// Store the express res param in a global let
 };

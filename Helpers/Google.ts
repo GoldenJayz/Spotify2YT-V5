@@ -1,5 +1,8 @@
 import { userSongs } from "./DatabaseCalls";
 import { client, db, queue, yt } from "./Spotify";
+import { Logger } from "tslog";
+
+const logger = new Logger({ name: "Google" });
 
 
 let curUser: string; // get cur user off queue when done
@@ -31,25 +34,25 @@ const getTokenRes = (res: any) => {
 	while (curUser == undefined || userSongs == undefined) {
 		curUser = queue[0];
 		if (curUser != undefined) {
-			console.log(curUser + " curuser logged");
+			logger.info(curUser + " curuser logged");
 			break;
 		}
 	}
 
 	db.listDocuments(curUser).then((res: any) =>
-		console.log(`Database: ${res[0]}`)
+		logger.info(`Database: ${res[0]}`)
 	);
 
 	db.updateData(curUser, { google_refresh_token: tokens.refresh_token }).then(
-		(res: any) => console.log(res)
+		(res: any) => logger.info(res)
 	);
 
 	client.setCredentials(tokens);
 
 	// then use youtube search api to search for the songs and get the links
 
-	console.log(curUser);
-	console.log(userSongs[curUser][0]); // Gets the first song name
+	logger.info(curUser);
+	logger.info(userSongs[curUser][0]); // Gets the first song name
 
 	yt.playlists
 		.insert({
@@ -75,7 +78,12 @@ const playlistCreationRes = (res: any) => {
 				maxResults: 1,
 				order: "relevance",
 				q: `${userSongs[curUser][i]}`,
-			}).then(dumpIntoPlaylist);
+			})
+				.then(dumpIntoPlaylist)
+				.catch((err: any) => {
+					const warnMsg = "Error searching song: " + userSongs[curUser][i];
+					logger.warn(warnMsg);
+				});
 		}, 1500*i);
 	}
 
@@ -84,7 +92,6 @@ const playlistCreationRes = (res: any) => {
 
 const dumpIntoPlaylist = (res: any) => {
 	const id = res.data.items[0].id.videoId;
-	console.log(id);
 
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
@@ -101,5 +108,10 @@ const dumpIntoPlaylist = (res: any) => {
 				}
 			}
 		}
-	});
+	})
+		.then(insertRes => logger.info(id)) // Create status messages that show up on the page
+		.catch((err: any) => {
+			const warnMsg = "Error inserting song with id: " + id;
+			logger.warn(warnMsg);
+		});
 };

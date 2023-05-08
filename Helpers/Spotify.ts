@@ -3,6 +3,9 @@ import request from "request";
 import Database from "../classes/Database";
 import { compareDBs } from "./DatabaseCalls";
 import { google } from "googleapis";
+import { Logger } from "tslog";
+
+const logger = new Logger({ name: "Spotify" });
 
 
 // Global Constants
@@ -48,7 +51,7 @@ export const reqUrl = client.generateAuthUrl({
 
 export const postSpotify = (req: any, res: any) => {
 	userPlaylistName = req.query.url;
-	console.log(req.query.url);
+	logger.info(req.query.url);
 	const clientId = data.spotify.client_id; // grabs client id from config
 	const scopes =
     "user-read-private user-read-email ugc-image-upload playlist-read-private playlist-read-collaborative";

@@ -15,6 +15,27 @@ interface playlist {
   uri: string;
 }
 
+interface playlistResBody { 
+  href: string;
+  items: playlist[],
+  limit: number;
+  next: null;
+  offset: number;
+  previous: null;
+  total: number;
+}
+
+interface tracksResBody { 
+  href: string;
+  items: trackInfo[],
+  limit: number;
+  next: null;
+  offset: number;
+  previous: null;
+  total: number;
+}
+
+
 interface playlistItemResource {
   kind: "youtube#playlistItem";
   etag: etag;
@@ -63,7 +84,7 @@ interface trackInfo {
   added_by: object;
   is_local: boolean;
   primary_color: null;
-  track: object;
+  track: songData;
   video_thumbnail: object;
 }
 
@@ -119,4 +140,23 @@ interface googleToken {
   scope: string;
   token_type: string;
   expiry_date: number;
+}
+
+interface spotifyToken {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  scope: string;
+}
+
+interface userSongs {
+  [key: string]: song[];
+}
+
+interface listDocRes {
+  _id: string;
+  id: string;
+  name: string;
+  spotify_refresh_token: string;
+  google_refresh_token: string;
 }

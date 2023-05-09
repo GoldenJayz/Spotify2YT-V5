@@ -6,8 +6,8 @@ import { Logger } from "tslog";
 const logger = new Logger({ name: "DatabaseCalls" });
 
 // Global Data
-export const userSongs: any = {};
-let accessToken: any;
+export const userSongs: userSongs = {};
+let accessToken: string;
 // let userSongs2 = { 'id': [] } 
 
 
@@ -15,27 +15,27 @@ let accessToken: any;
 // --------------SPOTIFY DB CALLS---------------
 // ---------------------------------------------
 
-export const compareDBs = (f: any) => {
-	let comparator = f[0];
-	if (comparator == undefined) comparator = {};
+export const compareDBs = (f: Array<listDocRes>) => {
+	const comparator = f[0];
 
-	// maybe check earlier so it doesnt do all this processing?
-
-	// if first searched entry is not blank then check if it is same so it doesnt add a dupe into the db
-	if (comparator.id != null && userDoc.id != null) {
-		if (comparator.id === userDoc.id) {
-			logger.info("user already in db");
-		} else {
-			db.insertData([userDoc]);
+	// maybe check earlier so it doesn't do all this processing?
+	// if first searched entry is not blank then check if it is same so it doesn't add a dupe into the db
+	try {
+		if (comparator.id != null && userDoc.id != null) {
+			if (comparator.id === userDoc.id) {
+				logger.info("user already in db");
+			} else {
+				db.insertData([userDoc]);
+			}
 		}
-	} else {
+	} catch {
 		if (userDoc.id != null) db.insertData([userDoc]);
 	}
-
+	
 	db.listDocuments(profileFuncBody.id).then(getUserCall);
 };
 
-const getUserCall = (res: any) => {
+const getUserCall = (res: Array<listDocRes>) => {
 	const user = res[0];
 
 	const accessTokenReq = {
@@ -55,11 +55,9 @@ const getUserCall = (res: any) => {
 	request.post(accessTokenReq, getAccessToken);
 }; // gets refresh token in order to renew access token
 
-const getAccessToken = (err: any, res: any, body: any) => {
-	// console.log(body);
+const getAccessToken = (err: string, res: object, body: spotifyToken) => {
 	// use access token in order to get playlist and songs with it
 	// then construct a song object and dump it into an array
-
 	accessToken = body.access_token;
 
 	const playlistReq = {
@@ -70,13 +68,13 @@ const getAccessToken = (err: any, res: any, body: any) => {
 		json: true,
 	};
 
+	// console.log(res);
 	request.get(playlistReq, playListReqCallback);
 };
 
-const playListReqCallback = (err: any, res: any, body: any) => {
+const playListReqCallback = (err: string, res: object, body: playlistResBody) => {
 	// let testPlaylistName = "metal bangers"; // test playlist name
 	const testPlaylistName = userPlaylistName;
-
 	const playlists: playlist[] = body.items;
 
 	const playlist = playlists.find(
@@ -95,7 +93,8 @@ const playListReqCallback = (err: any, res: any, body: any) => {
 	request.get(playlistTrack, playlistTrackReq);
 };
 
-const playlistTrackReq = (err: any, res: any, body: any) => {
+const playlistTrackReq = (err: string, res: object, body: tracksResBody) => {
+	console.log(body);
 	const userId = userDoc.id;
 	const obj: any = {};
 	obj[userId as keyof typeof obj] = [];
@@ -115,7 +114,7 @@ const playlistTrackReq = (err: any, res: any, body: any) => {
 	// logger.info(userSongs);
   
 	// Convert to letiable link instead of string
-	logger.info(URL + " From database clals");
+	logger.info(URL + " From database calls");
 	request.get(URL + "redirectToGoogle");
 	// Store the express res param in a global let
 };

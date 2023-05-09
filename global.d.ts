@@ -15,6 +15,44 @@ interface playlist {
   uri: string;
 }
 
+interface playlistItemResource {
+  kind: "youtube#playlistItem";
+  etag: etag;
+  id: string;
+  snippet: {
+    publishedAt: datetime;
+    channelId: string;
+    title: string;
+    description: string;
+    thumbnails: {
+      (key): {
+        url: string;
+        width: number;
+        height: number;
+      };
+    };
+    channelTitle: string;
+    videoOwnerChannelTitle: string;
+    videoOwnerChannelId: string;
+    playlistId: string;
+    position: number;
+    resourceId: {
+      kind: string;
+      videoId: string;
+    };
+  };
+  contentDetails: {
+    videoId: string;
+    startAt: string;
+    endAt: string;
+    note: string;
+    videoPublishedAt: datetime;
+  };
+  status: {
+    privacyStatus: string;
+  };
+}
+
 interface playlistTrackResponse {
   href: string;
   total: number;
@@ -33,21 +71,21 @@ interface songData {
   album: album;
   artists: artist[];
   available_markets: string[];
-  disc_number: number,
-  duration_ms: number,
-  episode: boolean,
-  explicit: boolean,
-  external_ids: object,
-  external_urls: object,
-  href: string,
-  id: string,
-  is_local: boolean,
-  name: string,
-  popularity: number,
-  preview_url: object,
-  track: boolean,
-  track_number: number,
-  type: string,
+  disc_number: number;
+  duration_ms: number;
+  episode: boolean;
+  explicit: boolean;
+  external_ids: object;
+  external_urls: object;
+  href: string;
+  id: string;
+  is_local: boolean;
+  name: string;
+  popularity: number;
+  preview_url: object;
+  track: boolean;
+  track_number: number;
+  type: string;
   uri: string;
 }
 

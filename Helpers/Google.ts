@@ -1,5 +1,6 @@
 import { userSongs } from "./DatabaseCalls";
 import { client, db, queue, yt } from "./Spotify";
+import { Request, Response } from "express";
 import { Logger } from "tslog";
 
 const logger = new Logger({ name: "Google" });
@@ -7,7 +8,7 @@ const logger = new Logger({ name: "Google" });
 
 let curUser: string; // get cur user off queue when done
 let playlistId: string;
-let response: any;
+let response: Response;
 
 
 // ------------------------------------------------------------
@@ -16,8 +17,9 @@ let response: any;
 
 // Check if data is in db then wait until it is in there
 
-export const googleCallback = (req: any, res: any) => {
-	const code = req.query.code!;
+export const googleCallback = (req: Request, res: Response) => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const code: any = req.query.code;
 	if (code == undefined) {
 		return res.status(400).send("No code provided");
 	}
@@ -109,8 +111,8 @@ const dumpIntoPlaylist = (res: any) => {
 			}
 		}
 	})
-		.then(insertRes => logger.info(id)) // Create status messages that show up on the page
-		.catch((err: any) => {
+		.then(() => logger.info(id)) // Create status messages that show up on the page
+		.catch(() => {
 			const warnMsg = "Error inserting song with id: " + id;
 			logger.warn(warnMsg);
 		});

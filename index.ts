@@ -7,7 +7,8 @@
  */
 
 import express from "express";
-import { callbackFunc, PORT, postSpotify, reqUrl, URL } from "./Helpers/Spotify";
+import { Request, Response } from "express";
+import { callbackFunc, PORT, postSpotify, URL } from "./Helpers/Spotify";
 import { googleCallback } from "./Helpers/Google";
 import { Logger } from "tslog";
 
@@ -16,17 +17,13 @@ const app = express();
  
 app.use(express.static("public"));
  
-app.get("/", (req: any, res: any) => { res.sendFile(__dirname + "/views/index.html"); });
- 
+app.get("/", (req: Request, res: Response) => { res.sendFile(__dirname + "/views/index.html"); });
 app.get("/postSpotify", postSpotify);
- 
 app.get("/callback", callbackFunc);
- 
 app.get("/googleCallback", googleCallback);
- 
-app.get("/redirectToGoogle", (req: any, res: any) => {
+app.get("/redirectToGoogle", (req: Request, res: Response) => {
 	return res.redirect("/googleCallback");
-}); // add callback func
+}); 
  
 app.listen(PORT, () => {
 	logger.silly(URL); // Store link in variable and export it for DatabaseCalls.ts

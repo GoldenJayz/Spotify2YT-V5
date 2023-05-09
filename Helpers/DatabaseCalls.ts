@@ -35,7 +35,7 @@ export const compareDBs = (f: any) => {
 	db.listDocuments(profileFuncBody.id).then(getUserCall);
 };
 
-const getUserCall = (res: any, userId: string) => {
+const getUserCall = (res: any) => {
 	const user = res[0];
 
 	const accessTokenReq = {

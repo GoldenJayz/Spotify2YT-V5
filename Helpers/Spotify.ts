@@ -4,6 +4,7 @@ import Database from "../classes/Database";
 import { compareDBs } from "./DatabaseCalls";
 import { google } from "googleapis";
 import { Logger } from "tslog";
+import { Request, Response } from "express";
 
 const logger = new Logger({ name: "Spotify" });
 
@@ -68,7 +69,7 @@ export const postSpotify = (req: any, res: any) => {
 //---------------------CALLBACK SECTION -----------------------
 // ------------------------------------------------------------
 
-export const callbackFunc = (req: any, res: any) => {
+export const callbackFunc = (req: Request, res: Response) => {
 	const code = req.query.code!;
 	const clientId = data.spotify.client_id;
 	const clientSec = data.spotify.client_secret;

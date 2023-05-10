@@ -94,9 +94,8 @@ const playListReqCallback = (err: string, res: object, body: playlistResBody) =>
 };
 
 const playlistTrackReq = (err: string, res: object, body: tracksResBody) => {
-	console.log(body);
 	const userId = userDoc.id;
-	const obj: any = {};
+	const obj: userSongs = {};
 	obj[userId as keyof typeof obj] = [];
 
 	Object.assign(userSongs, obj);

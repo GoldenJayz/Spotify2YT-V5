@@ -10,11 +10,11 @@
     <li>Frontend (redesign)</li>
     <li>Pen testing</li>
     <li>Youtube to Spotify conversion</li>
-    <li>Convert to async/await syntax</li>
-    <li>Have proper URI's based off of Config file</li>
+    <li><s>Convert to async/await syntax</s></li>
+    <li><s>Have proper URI's based off of Config file</s></li>
     <li>Organize/Refactor Code</li>
     <li>Add more typings</li>
-    <li>Add logging</li>
+    <li><s>Add logging</s></li>
     <li>Maybe remove circular imports</li>
 </ol>
 

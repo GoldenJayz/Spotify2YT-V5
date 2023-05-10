@@ -30,6 +30,7 @@ export const googleCallback = (req: Request, res: Response) => {
 };
 
 const getTokenRes = (res: any) => {
+	console.log("Line 33" + res);
 	const tokens: googleToken = res.tokens! != null ? res.tokens : null;
 	curUser = queue[0];
 
@@ -70,6 +71,7 @@ const getTokenRes = (res: any) => {
 };
 
 const playlistCreationRes = (res: any) => {
+	console.log("Line 74:" + res);
 	playlistId = res.data.id; // Users playlist id that was just created
 
 	for (let i = 0; i < 5; i++) { // userSongs[curUser].length 5 is for testing it so it doesn't burn all my quota
@@ -82,7 +84,7 @@ const playlistCreationRes = (res: any) => {
 				q: `${userSongs[curUser][i]}`,
 			})
 				.then(dumpIntoPlaylist)
-				.catch((err: any) => {
+				.catch(() => {
 					const warnMsg = "Error searching song: " + userSongs[curUser][i];
 					logger.warn(warnMsg);
 				});
@@ -93,6 +95,7 @@ const playlistCreationRes = (res: any) => {
 };
 
 const dumpIntoPlaylist = (res: any) => {
+	console.log("Line 98: " + res);
 	const id = res.data.items[0].id.videoId;
 
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment

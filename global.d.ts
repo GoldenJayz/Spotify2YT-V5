@@ -15,9 +15,9 @@ interface playlist {
   uri: string;
 }
 
-interface playlistResBody { 
+interface playlistResBody {
   href: string;
-  items: playlist[],
+  items: playlist[];
   limit: number;
   next: null;
   offset: number;
@@ -25,16 +25,15 @@ interface playlistResBody {
   total: number;
 }
 
-interface tracksResBody { 
+interface tracksResBody {
   href: string;
-  items: trackInfo[],
+  items: trackInfo[];
   limit: number;
   next: null;
   offset: number;
   previous: null;
   total: number;
 }
-
 
 interface playlistItemResource {
   kind: "youtube#playlistItem";
@@ -160,3 +159,83 @@ interface listDocRes {
   spotify_refresh_token: string;
   google_refresh_token: string;
 }
+
+interface tokenResponse {
+  tokens: googleToken;
+}
+
+interface creationResponse {
+  config: {
+    method: string;
+    url: string;
+    data: string;
+    headers: object;
+    paramsSerializer: [Function: paramsSerializer];
+    body: string;
+    validateStatus: [Function: validateStatus];
+    responseType: string;
+  };
+  data: {
+    kind: string;
+    etag: string;
+    id: string;
+    snippet: {
+      publishedAt: string;
+      channelId: string;
+      title: string;
+      description: string;
+      thumbnails: object;
+      channelTitle: string;
+      localized: object;
+    };
+    headers: {
+      "alt-svc": string;
+      "cache-control": string;
+      connection: string;
+      "content-encoding": string;
+      "content-type": string;
+      date: string;
+      expires: string;
+      pragma: string;
+      server: string;
+      "transfer-encoding": string;
+      vary: string;
+      "x-content-type-options": string;
+      "x-frame-options": string;
+      "x-xss-protection": string;
+    };
+    status: number;
+    statusText: string;
+    request: { responseURL: "https://oauth2.googleapis.com/token" };
+  };
+}
+
+interface insertResponse {
+  data: {
+    kind: string;
+    etag: string;
+    nextPageToken: string;
+    regionCode: string;
+    pageInfo: object;
+    items: [ 
+      insertItems
+     ];
+  }
+}
+
+interface insertItems {
+  kind: string;
+  etag: string;
+  id: { kind: string, videoId: string },
+  snippet: {
+    publishedAt: string;
+    channelId: string;
+    title: string;
+    description: string;
+    thumbnails: { default: object, medium: object, high: object };
+    channelTitle: string;
+    liveBroadcastContent: string;
+    publishTime: string;
+  }
+}
+

@@ -113,7 +113,6 @@ const playlistTrackReq = (err: string, res: object, body: tracksResBody) => {
 	// logger.info(userSongs);
   
 	// Convert to letiable link instead of string
-	logger.info(URL + " From database calls");
 	request.get(URL + "redirectToGoogle");
 	// Store the express res param in a global let
 };

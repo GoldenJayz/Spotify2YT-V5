@@ -29,9 +29,9 @@ export const googleCallback = (req: Request, res: Response) => {
 	// return res.redirect("/"); // Not redirecting for now
 };
 
-const getTokenRes = (res: any) => {
-	console.log("Line 33" + res);
-	const tokens: googleToken = res.tokens! != null ? res.tokens : null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getTokenRes: any = (res: tokenResponse) => {
+	const tokens: googleToken = res.tokens;
 	curUser = queue[0];
 
 	while (curUser == undefined || userSongs == undefined) {
@@ -42,14 +42,8 @@ const getTokenRes = (res: any) => {
 		}
 	}
 
-	db.listDocuments(curUser).then((res: any) =>
-		logger.info(`Database: ${res[0]}`)
-	);
-
-	db.updateData(curUser, { google_refresh_token: tokens.refresh_token }).then(
-		(res: any) => logger.info(res)
-	);
-
+	db.listDocuments(curUser);
+	db.updateData(curUser, { google_refresh_token: tokens.refresh_token });
 	client.setCredentials(tokens);
 
 	// then use youtube search api to search for the songs and get the links
@@ -70,10 +64,11 @@ const getTokenRes = (res: any) => {
 		.then(playlistCreationRes);
 };
 
-const playlistCreationRes = (res: any) => {
-	console.log("Line 74:" + res);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const playlistCreationRes: any = (res: creationResponse) => {
 	playlistId = res.data.id; // Users playlist id that was just created
 
+	// Try inserting all the songs into the playlist at once
 	for (let i = 0; i < 5; i++) { // userSongs[curUser].length 5 is for testing it so it doesn't burn all my quota
 		setTimeout(() => {
 			// console.log(userSongs[curUser][i])
@@ -94,8 +89,9 @@ const playlistCreationRes = (res: any) => {
 	return response.redirect("/");
 };
 
-const dumpIntoPlaylist = (res: any) => {
-	console.log("Line 98: " + res);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const dumpIntoPlaylist: any = (res: insertResponse) => {
+	console.log(res.data.items[0]);
 	const id = res.data.items[0].id.videoId;
 
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment

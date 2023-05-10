@@ -91,7 +91,6 @@ const playlistCreationRes: any = (res: creationResponse) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const dumpIntoPlaylist: any = (res: insertResponse) => {
-	console.log(res.data.items[0]);
 	const id = res.data.items[0].id.videoId;
 
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment

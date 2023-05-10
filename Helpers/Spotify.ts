@@ -18,9 +18,9 @@ const databaseName = data.db_name;
 export const db = new Database(url, colName, databaseName); // Init Database
 export const PORT = data.port;
 export const URL = data.base_url;
-export const queue: any[] = [];
-export let userPlaylistName = "";
-export let userDoc: any;
+export const queue: string[] = [];
+export let userPlaylistName: any = "";
+export let userDoc: IUserDoc;
 export let profileFuncBody: any;
 let bod: any;
 
@@ -50,7 +50,7 @@ export const reqUrl = client.generateAuthUrl({
 //-----------------SPOTIFY AUTH CODE SECTION ------------------
 // ------------------------------------------------------------
 
-export const postSpotify = (req: any, res: any) => {
+export const postSpotify = (req: Request, res: Response) => {
 	userPlaylistName = req.query.url;
 	logger.info(req.query.url);
 	const clientId = data.spotify.client_id; // grabs client id from config

@@ -16,6 +16,7 @@
     <li>Add more typings</li>
     <li><s>Add logging</s></li>
     <li>Maybe remove circular imports</li>
+    <li>Enforce naming conventions</li>
 </ol>
 
 # Contributing

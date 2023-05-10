@@ -239,3 +239,10 @@ interface insertItems {
   }
 }
 
+interface IUserDoc {
+		id: string;
+		name: string;
+		spotify_refresh_token: string;
+}
+
+

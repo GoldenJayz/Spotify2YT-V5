@@ -217,32 +217,59 @@ interface insertResponse {
     nextPageToken: string;
     regionCode: string;
     pageInfo: object;
-    items: [ 
-      insertItems
-     ];
-  }
+    items: [insertItems];
+  };
 }
 
 interface insertItems {
   kind: string;
   etag: string;
-  id: { kind: string, videoId: string },
+  id: { kind: string; videoId: string };
   snippet: {
     publishedAt: string;
     channelId: string;
     title: string;
     description: string;
-    thumbnails: { default: object, medium: object, high: object };
+    thumbnails: { default: object; medium: object; high: object };
     channelTitle: string;
     liveBroadcastContent: string;
     publishTime: string;
-  }
+  };
 }
 
 interface IUserDoc {
-		id: string;
-		name: string;
-		spotify_refresh_token: string;
+  id: string;
+  name: string;
+  spotify_refresh_token: string;
 }
 
+interface ISpotifyAccessToken {
+  access_token: string;
+  expires_in: number;
+  refresh_token: string;
+  scope: string;
+  token_type: string;
+}
 
+interface ISpotifyProfile {
+  country: string;
+  display_name: string;
+  email: string;
+  explicit_content: {
+    filter_enabled: boolean;
+    filter_locked: boolean;
+  };
+  external_urls: {
+    spotify: string;
+  };
+  followers: {
+    href: null;
+    total: number;
+  };
+  href: string;
+  id: string;
+  images: Array<object>;
+  product: string;
+  type: string;
+  uri: string;
+}

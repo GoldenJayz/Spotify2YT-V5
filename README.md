@@ -17,6 +17,7 @@
     <li><s>Add logging</s></li>
     <li>Maybe remove circular imports</li>
     <li>Enforce naming conventions</li>
+    <li>MongoDB Docker image for deployment</li>
 </ol>
 
 # Contributing

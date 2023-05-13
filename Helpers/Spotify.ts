@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { readFileSync } from "fs";
 import request from "request";
 import Database from "../classes/Database";
@@ -70,6 +71,7 @@ export const postSpotify = (req: Request, res: Response) => {
 // ------------------------------------------------------------
 
 export const callbackFunc = (req: Request, res: Response) => {
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const code = req.query.code!;
 	const clientId = data.spotify.client_id;
 	const clientSec = data.spotify.client_secret;
@@ -96,8 +98,8 @@ export const callbackFunc = (req: Request, res: Response) => {
 	return res.redirect(reqUrl); // Change to the google OAuth2 redirect
 };
 
-const authReqPost = (err: any, res: any, body: any) => {
-	if (err) return console.warn(err);
+const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
+	if (err) return console.error(err);
 
 	bod = body;
 
@@ -112,7 +114,7 @@ const authReqPost = (err: any, res: any, body: any) => {
 	request.get(getProfile, getProfileFunc);
 };
 
-const getProfileFunc = (err: any, res: any, body: any) => {
+const getProfileFunc = (err: string, res: object, body: ISpotifyProfile) => {
 	profileFuncBody = body;
 	if (err) return console.warn(err);
 
@@ -127,5 +129,3 @@ const getProfileFunc = (err: any, res: any, body: any) => {
 	queue.push(userDoc.id);
 	db.listDocuments(userDoc.id).then(compareDBs);
 };
-
-// const getCurrentUserPlaylist = 

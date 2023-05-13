@@ -1,8 +1,9 @@
 import express from 'express';
 import { Request, Response } from 'express';
-import { callbackFunc, PORT, postSpotify, URL } from './Helpers/Spotify';
+import { callbackFunc, postSpotify } from './Helpers/Spotify';
 import { googleCallback } from './Helpers/Google';
 import { Logger } from 'tslog';
+import { PORT, URL } from './Helpers/exports';
 
 const logger = new Logger({ name: 'Index' }); 
 const app = express();

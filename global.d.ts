@@ -1,3 +1,5 @@
+
+
 interface playlist {
   collaborative: boolean;
   description: string;
@@ -36,7 +38,7 @@ interface tracksResBody {
 }
 
 interface playlistItemResource {
-  kind: "youtube#playlistItem";
+  kind: 'youtube#playlistItem';
   etag: etag;
   id: string;
   snippet: {
@@ -189,24 +191,24 @@ interface creationResponse {
       localized: object;
     };
     headers: {
-      "alt-svc": string;
-      "cache-control": string;
+      'alt-svc': string;
+      'cache-control': string;
       connection: string;
-      "content-encoding": string;
-      "content-type": string;
+      'content-encoding': string;
+      'content-type': string;
       date: string;
       expires: string;
       pragma: string;
       server: string;
-      "transfer-encoding": string;
+      'transfer-encoding': string;
       vary: string;
-      "x-content-type-options": string;
-      "x-frame-options": string;
-      "x-xss-protection": string;
+      'x-content-type-options': string;
+      'x-frame-options': string;
+      'x-xss-protection': string;
     };
     status: number;
     statusText: string;
-    request: { responseURL: "https://oauth2.googleapis.com/token" };
+    request: { responseURL: 'https://oauth2.googleapis.com/token' };
   };
 }
 

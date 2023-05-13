@@ -6,7 +6,7 @@ export default class Database {
 	private readonly colName: string;
 	private readonly client: MongoClient;
 	private readonly dbName;
-	private collection: Collection<any>;
+	private collection!: Collection<any>;
 	private db: any;
 
 	public constructor(url: string, colName: string, dbName: string) {
@@ -14,7 +14,6 @@ export default class Database {
 		this.colName = colName;
 		this.dbName = dbName;
 		this.client = new MongoClient(this.url);
-		this.collection = new Collection();
 		this.connect(this.colName);
 	}
 

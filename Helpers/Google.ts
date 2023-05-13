@@ -1,8 +1,9 @@
 
-import { client, yt, userSongs } from './Spotify';
+import { userSongs } from './Spotify';
+
 import { Request, Response } from 'express';
 import { Logger } from 'tslog';
-import { db, queue } from './exports';
+import { client, db, queue, yt } from './exports';
 
 const logger = new Logger({ name: 'Google' });
 

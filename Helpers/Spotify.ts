@@ -2,45 +2,24 @@
 import 'fs';
 import request from 'request';
 import '../classes/Database';
-import { google } from 'googleapis';
 import { Logger } from 'tslog';
 import { Request, Response } from 'express';
-import { data, queue, db, URL } from './exports';
+import { data, queue, db, URL, reqUrl } from './exports';
 import Song from '../classes/Song';
 
-const logger = new Logger({ name: 'Spotify' });
 
 /*
 	Either remove all the exports from this file and put them in index.ts or global.d.ts
 */
 
+export const userSongs: userSongs = {};
+const logger = new Logger({ name: 'Spotify' });
+
 let userPlaylistName: any = '';
 let userDoc: IUserDoc;
 let profileFuncBody: any;
-export const userSongs: userSongs = {};
 let accessToken: string;
 let bod: any;
-
-
-// Global Constants
-export const client = new google.auth.OAuth2(
-	data.google.client_id,
-	data.google.client_secret,
-	data.google.redirect_uri
-);
-
-export const yt = google.youtube({
-	version: 'v3',
-	auth: client,
-});
-
-const scopes = ['https://www.googleapis.com/auth/youtube'];
-
-export const reqUrl = client.generateAuthUrl({
-	access_type: 'offline',
-	scope: scopes,
-	include_granted_scopes: true,
-});
 
 
 // ------------------------------------------------------------

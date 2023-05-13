@@ -1,9 +1,9 @@
-import request from "request";
-import Song from "../classes/Song";
-import { userDoc, db, profileFuncBody, data, userPlaylistName, URL } from "./Spotify";
-import { Logger } from "tslog";
+import request from 'request';
+import Song from '../classes/Song';
+import { userDoc, db, profileFuncBody, data, userPlaylistName, URL } from './Spotify';
+import { Logger } from 'tslog';
 
-const logger = new Logger({ name: "DatabaseCalls" });
+const logger = new Logger({ name: 'DatabaseCalls' });
 
 // Global Data
 export const userSongs: userSongs = {};
@@ -23,7 +23,7 @@ export const compareDBs = (f: Array<listDocRes>) => {
 	try {
 		if (comparator.id != null && userDoc.id != null) {
 			if (comparator.id === userDoc.id) {
-				logger.info("user already in db");
+				logger.info('user already in db');
 			} else {
 				db.insertData([userDoc]);
 			}
@@ -39,15 +39,15 @@ const getUserCall = (res: Array<listDocRes>) => {
 	const user = res[0];
 
 	const accessTokenReq = {
-		uri: "https://accounts.spotify.com/api/token",
+		uri: 'https://accounts.spotify.com/api/token',
 		form: {
 			refresh_token: user.spotify_refresh_token,
-			grant_type: "refresh_token",
+			grant_type: 'refresh_token',
 		},
 		headers: {
 			Authorization:
-        "Basic " +
-        Buffer.from(data.spotify.client_id + ":" + data.spotify.client_secret).toString("base64"),
+        'Basic ' +
+        Buffer.from(data.spotify.client_id + ':' + data.spotify.client_secret).toString('base64'),
 		},
 		json: true,
 	};
@@ -61,7 +61,7 @@ const getAccessToken = (err: string, res: object, body: spotifyToken) => {
 	accessToken = body.access_token;
 
 	const playlistReq = {
-		uri: "https://api.spotify.com/v1/me/playlists",
+		uri: 'https://api.spotify.com/v1/me/playlists',
 		headers: {
 			Authorization: `Bearer ${body.access_token}`,
 		},
@@ -80,7 +80,7 @@ const playListReqCallback = (err: string, res: object, body: playlistResBody) =>
 	const playlist = playlists.find(
 		(playlist) => playlist.name === testPlaylistName
 	); // finds playlist object with given name
-	if (playlist === undefined) return logger.warn("playlist not found");
+	if (playlist === undefined) return logger.warn('playlist not found');
 
 	const playlistTrack = {
 		uri: playlist.tracks.href,
@@ -112,7 +112,6 @@ const playlistTrackReq = (err: string, res: object, body: tracksResBody) => {
 
 	// logger.info(userSongs);
   
-	// Convert to letiable link instead of string
-	request.get(URL + "redirectToGoogle");
+	request.get(URL + 'redirectToGoogle');
 	// Store the express res param in a global let
 };

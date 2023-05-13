@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { readFileSync } from "fs";
-import request from "request";
-import Database from "../classes/Database";
-import { compareDBs } from "./DatabaseCalls";
-import { google } from "googleapis";
-import { Logger } from "tslog";
-import { Request, Response } from "express";
+import { readFileSync } from 'fs';
+import request from 'request';
+import Database from '../classes/Database';
+import { compareDBs } from './DatabaseCalls';
+import { google } from 'googleapis';
+import { Logger } from 'tslog';
+import { Request, Response } from 'express';
 
-const logger = new Logger({ name: "Spotify" });
+const logger = new Logger({ name: 'Spotify' });
 
 
 // Global Constants
-const config = readFileSync("./config.json"); // Change to ./build/config.json for build version debugging
+const config = readFileSync('./config.json'); // Change to ./build/config.json for build version debugging
 export const data = JSON.parse(config.toString());
 const url = data.url;
 const colName = data.collections[0];
@@ -20,7 +20,7 @@ export const db = new Database(url, colName, databaseName); // Init Database
 export const PORT = data.port;
 export const URL = data.base_url;
 export const queue: string[] = [];
-export let userPlaylistName: any = "";
+export let userPlaylistName: any = '';
 export let userDoc: IUserDoc;
 export let profileFuncBody: any;
 let bod: any;
@@ -34,14 +34,14 @@ export const client = new google.auth.OAuth2(
 );
 
 export const yt = google.youtube({
-	version: "v3",
+	version: 'v3',
 	auth: client,
 });
 
-const scopes = ["https://www.googleapis.com/auth/youtube"];
+const scopes = ['https://www.googleapis.com/auth/youtube'];
 
 export const reqUrl = client.generateAuthUrl({
-	access_type: "offline",
+	access_type: 'offline',
 	scope: scopes,
 	include_granted_scopes: true,
 });
@@ -56,12 +56,12 @@ export const postSpotify = (req: Request, res: Response) => {
 	logger.info(req.query.url);
 	const clientId = data.spotify.client_id; // grabs client id from config
 	const scopes =
-    "user-read-private user-read-email ugc-image-upload playlist-read-private playlist-read-collaborative";
+    'user-read-private user-read-email ugc-image-upload playlist-read-private playlist-read-collaborative';
 
 	return res.redirect(
 		`https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}${
-			scopes ? "&scope=" + encodeURIComponent(scopes) : ""
-		}&redirect_uri=${encodeURIComponent(URL + "callback")}`
+			scopes ? '&scope=' + encodeURIComponent(scopes) : ''
+		}&redirect_uri=${encodeURIComponent(URL + 'callback')}`
 	);
 };
 
@@ -79,15 +79,15 @@ export const callbackFunc = (req: Request, res: Response) => {
 	if (req.query.code == null) return res.sendStatus(401);
 
 	const authReq = {
-		url: "https://accounts.spotify.com/api/token",
+		url: 'https://accounts.spotify.com/api/token',
 		form: {
 			code,
-			redirect_uri: URL + "callback",
-			grant_type: "authorization_code",
+			redirect_uri: URL + 'callback',
+			grant_type: 'authorization_code',
 		},
 		headers: {
 			Authorization:
-        "Basic " + Buffer.from(clientId + ":" + clientSec).toString("base64"),
+        'Basic ' + Buffer.from(clientId + ':' + clientSec).toString('base64'),
 		},
 		json: true,
 	};
@@ -104,7 +104,7 @@ const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
 	bod = body;
 
 	const getProfile = {
-		url: "https://api.spotify.com/v1/me",
+		url: 'https://api.spotify.com/v1/me',
 		headers: {
 			Authorization: `Bearer ${body.access_token}`,
 		},

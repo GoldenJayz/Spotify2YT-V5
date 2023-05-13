@@ -1,11 +1,3 @@
-/*
- Use bun
- Use React for frontend
- api maybe?
- maybe next js
- Put all the configurations into index.js
- */
-
 import express from 'express';
 import { Request, Response } from 'express';
 import { callbackFunc, PORT, postSpotify, URL } from './Helpers/Spotify';

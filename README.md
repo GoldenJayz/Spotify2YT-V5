@@ -13,11 +13,11 @@
     <li><s>Convert to async/await syntax</s></li>
     <li><s>Have proper URI's based off of Config file</s></li>
     <li>Organize/Refactor Code</li>
-    <li>Add more typings</li>
+    <li><s>Add more typings</s></li>
     <li><s>Add logging</s></li>
     <li>Maybe remove circular imports</li>
     <li>Enforce naming conventions</li>
-    <li>MongoDB Docker image for deployment</li>
+    <li><s>MongoDB Docker image for deployment</s></li>
 </ol>
 
 # Contributing

@@ -1,12 +1,10 @@
-
 import { userSongs } from './Spotify';
-
 import { Request, Response } from 'express';
 import { Logger } from 'tslog';
 import { client, db, queue, yt } from './exports';
 
+// Globals
 const logger = new Logger({ name: 'Google' });
-
 
 let curUser: string; // get cur user off queue when done
 let playlistId: string;

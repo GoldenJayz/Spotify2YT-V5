@@ -15,7 +15,7 @@
     <li>Organize/Refactor Code</li>
     <li><s>Add more typings</s></li>
     <li><s>Add logging</s></li>
-    <li>Maybe remove circular imports</li>
+    <li><s>Maybe remove circular imports</s></li>
     <li>Enforce naming conventions</li>
     <li><s>MongoDB Docker image for deployment</s></li>
 </ol>

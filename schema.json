@@ -13,5 +13,10 @@
     "client_id": "",
     "client_secret": "",
     "redirect_uri": ""
+  },
+  "paypal": {
+    "client_id": "",
+    "client_secret": "",
+    "redirect_uri": ""
   }
 }

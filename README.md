@@ -18,6 +18,7 @@
     <li><s>Maybe remove circular imports</s></li>
     <li>Enforce naming conventions</li>
     <li><s>MongoDB Docker image for deployment</s></li>
+    <li>Use cookies</li>
 </ol>
 
 # Contributing

@@ -18,6 +18,7 @@
 
             if (payerId != undefined || paymentId != undefined) {
                 // Add some headers for increased security
+                // Change the URL to your own server
                 fetch('http://localhost:6969/validatePayment', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},

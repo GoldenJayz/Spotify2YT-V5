@@ -27,5 +27,8 @@ export const successPayment = (req: Request, res: Response) => {
 	const paymentId = req.query.paymentId;
 	const token = req.query.token;
 
-	db.updateData('test', { paymentId: paymentId, payerId } ).then(res => console.log(res));
+	// Still need to figure this out
+	db.updateData('testID', { paymentId: paymentId, payerId: payerId } ).then(res => console.log(res));
+
+	return res.redirect(data.base_url);
 };

@@ -102,7 +102,7 @@ const getProfileFunc = (err: string, res: object, body: ISpotifyProfile) => {
 
 	// console.log(userDoc);
 	queue.push(userDoc.id);
-	db.listDocuments(userDoc.id).then(compareDBs);
+	db.listDocuments('id', userDoc.id).then(compareDBs);
 };
 
 
@@ -127,7 +127,7 @@ const compareDBs = (f: Array<listDocRes>) => {
 		if (userDoc.id != null) db.insertData([userDoc]);
 	}
 	
-	db.listDocuments(profileFuncBody.id).then(getUserCall);
+	db.listDocuments('id', profileFuncBody.id).then(getUserCall);
 };
 
 const getUserCall = (res: Array<listDocRes>) => {

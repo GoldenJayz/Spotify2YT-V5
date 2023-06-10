@@ -42,7 +42,7 @@ const getTokenRes: any = (res: tokenResponse) => {
 		}
 	}
 
-	db.listDocuments(curUser);
+	db.listDocuments('id', curUser);
 	db.updateData(curUser, { google_refresh_token: tokens.refresh_token });
 	client.setCredentials(tokens);
 

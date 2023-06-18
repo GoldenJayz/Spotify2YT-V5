@@ -6,6 +6,7 @@ import { callbackFunc, postSpotify } from './Helpers/Spotify';
 import { googleCallback } from './Helpers/Google';
 import { createPayment, successPayment, validatePayment } from './Helpers/PayPal';
 import bodyParser from 'body-parser';
+import { exchangeTokens } from './Helpers/exchange';
 
 const logger = new Logger({ name: 'Index' }); 
 const app = express();
@@ -20,6 +21,8 @@ app.get('/googleCallback', googleCallback);
 app.get('/paypal', createPayment);
 app.get('/paypal/success', (req: Request, res: Response) => { res.sendFile(__dirname + '/views/success.html'); });
 app.post('/validatePayment', validatePayment);
+app.post('/exchangetokens', exchangeTokens);
+
 
 app.listen(PORT, () => {
 	logger.silly(URL); // Store link in variable and export it for DatabaseCalls.ts

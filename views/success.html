@@ -26,7 +26,17 @@
                         paymentId,
                         payerId
                     })
-                }).then(res => console.log(res)).catch(err => console.error(err));
+                })
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => console.error(err));
+
+                // Pass in refresh tokens in local storage for hash
+                // window.load if both refresh tokens are in local storage then do an exchange
+                fetch('http://localhost:6969/exchangetokens', {
+                    method: 'POST'
+                });
             }
         };
     </script>

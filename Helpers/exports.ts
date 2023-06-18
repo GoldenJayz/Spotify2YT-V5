@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import Database from '../classes/Database';
 import { google } from 'googleapis';
 
-export const config = readFileSync('./config.json');
+export const config = readFileSync('./config.json'); // ./build/config.json for debug
 export const data = JSON.parse(config.toString());
 export const url = data.url;
 export const colName = data.collections[0];

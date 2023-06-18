@@ -16,7 +16,14 @@ export const validatePayment = (req: Request, res: Response) => {
 
 	// Make structs for req body
 	console.log(req.body);
-	db.listDocuments('payerId', req.body.payerId).then(res => console.log(res));
+	db.listDocuments('payerId', req.body.payerId).then(res => {
+		console.log(res);
+	});
+
+	// Could also probably use a hash to access the data in the database, each user has a unique hash that is stored as a cookie
+	// Every Spotify or PayPal login generates a unique hash for the database
+	// Pass in both refresh tokens to exchange for a hash
+
 	// Now stash a cookie >:)
 	// Cross check in database
 	// Then map cookie to user

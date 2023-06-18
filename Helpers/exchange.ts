@@ -27,5 +27,6 @@ export const exchangeTokens = (req: Request, res: Response) => {
 			}
 			else return res.status(400).send('Invalid request');
 		});
+		// Add hash expirary date
 	}
 };

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "standard index.ts",
     "start": "cd build && node index.js 1> Spotify2YT.log 2> Spotify2YT.err.log",
-    "build": "tsc && cd build && node index.js"
+    "build": "tsc && cd build && node index.js",
+    "quick": "cd build && node index.js"
   },
   "ts-standard": {
     "project": "./tsconfig.json"

@@ -21,7 +21,8 @@ export const googleCallback = (req: Request, res: Response) => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const code: any = req.query.code;
 	if (code == undefined) {
-		return res.status(400).send('No code provided');
+		return res.sendStatus(401);
+
 	}
 	response = res;
 

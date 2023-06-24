@@ -25,6 +25,6 @@ app.post('/exchangetokens', exchangeTokens);
 
 
 app.listen(PORT, () => {
-	logger.silly(URL); // Store link in variable and export it for DatabaseCalls.ts
+	logger.silly(URL);
 });
  

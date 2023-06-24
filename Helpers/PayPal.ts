@@ -10,6 +10,26 @@ const config: any = {
 
 paypal.configure(config);
 
+export const validatePayment = (req: Request, res: Response) => {
+
+	// Query the database with the check_payment_json
+
+	// Make structs for req body
+	console.log(req.body);
+	db.listDocuments('payerId', req.body.payerId).then(res => {
+		console.log(res);
+	});
+
+	// Could also probably use a hash to access the data in the database, each user has a unique hash that is stored as a cookie
+	// Every Spotify or PayPal login generates a unique hash for the database
+	// Pass in both refresh tokens to exchange for a hash
+
+	// Now stash a cookie >:)
+	// Cross check in database
+	// Then map cookie to user
+	// When user visits website again, make a request to fetch user data. Then user will not have to login again
+};
+
 export const createPayment = (req: Request, res: Response) => {
 	paypal.payment.create(create_payment_json, (err, data) => {
 		if (err) {

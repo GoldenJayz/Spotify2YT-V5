@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify2YT | PayPal Success</title>
+    <script>
+        window.onload = () => {
+            const curUrl = window.location.href;
+            const queryString = window.location.search;
+            const params = new URLSearchParams(queryString);
+
+            console.log(curUrl);
+
+            const payerId = params.get('PayerID');
+            const paymentId = params.get('paymentId');
+
+            if (payerId != undefined || paymentId != undefined) {
+                // Add some headers for increased security
+                // Change the URL to your own server
+                fetch('http://localhost:6969/validatePayment', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        paymentId,
+                        payerId
+                    })
+                })
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => console.error(err));
+
+                // Pass in refresh tokens in local storage for hash
+                // window.load if both refresh tokens are in local storage then do an exchange
+                fetch('http://localhost:6969/exchangetokens', {
+                    method: 'POST'
+                });
+            }
+        };
+    </script>
+</head>
+
+<body>
+    u can close this window!
+</body>
+
+</html>

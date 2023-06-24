@@ -6,7 +6,8 @@
   "scripts": {
     "test": "standard index.ts",
     "start": "cd build && node index.js 1> Spotify2YT.log 2> Spotify2YT.err.log",
-    "build": "tsc && cd build && node index.js"
+    "build": "tsc && cd build && node index.js",
+    "quick": "cd build && node index.js"
   },
   "ts-standard": {
     "project": "./tsconfig.json"
@@ -15,9 +16,11 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.1",
+    "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "express.js": "^1.0.0",
     "fs": "^0.0.1-security",
+    "generatehash": "github:Pupppy44/generatehash",
     "googleapis": "^109.0.1",
     "mongodb": "^4.12.1",
     "node-fetch": "^3.3.1",

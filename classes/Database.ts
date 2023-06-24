@@ -29,10 +29,14 @@ export default class Database {
 		}
 	}
 
-	public listDocuments(id?: string) {
+	// Have to change this method to make it so it does not search for id
+	public listDocuments(keyName: string, value: string) {
 		let documents;
-		if (id == undefined) documents = this.collection.find({}).toArray();
-		else documents = this.collection.find({ id }).toArray();
+		let obj = {
+			[keyName]: value
+		};
+
+		documents = this.collection.find(obj).toArray();
 
 		return documents;
 	}

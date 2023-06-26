@@ -20,6 +20,7 @@ let userDoc: IUserDoc;
 let profileFuncBody: any;
 let accessToken: string;
 let bod: any;
+let response: any;
 
 
 // ------------------------------------------------------------
@@ -70,7 +71,11 @@ export const callbackFunc = (req: Request, res: Response) => {
 	request.post(authReq, authReqPost);
 
 	// Replace this line with a variable with the auth link
-	return res.redirect(reqUrl); // Change to the google OAuth2 redirect
+	// return res.redirect(reqUrl); // Change to the google OAuth2 redirect
+
+	response = res;
+	// Save the res and clear it as soon as you get to authReqPost
+
 };
 
 const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
@@ -87,6 +92,8 @@ const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
 	};
 
 	request.get(getProfile, getProfileFunc);
+
+	response.sendFile(__dirname + '/views/auth.html');
 };
 
 const getProfileFunc = (err: string, res: object, body: ISpotifyProfile) => {

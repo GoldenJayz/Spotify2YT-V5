@@ -87,6 +87,8 @@ const playlistCreationRes: any = (res: creationResponse) => {
 		}, 1500*i);
 	}
 
+	queue.shift();
+
 	return response.redirect('/');
 };
 

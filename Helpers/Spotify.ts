@@ -9,7 +9,7 @@ import Song from '../classes/Song';
 
 
 /*
-	Either remove all the exports from this file and put them in index.ts or global.d.ts
+	DOUBLE REFRESH CAUSES THE APP TO CRASH
 */
 
 export const userSongs: userSongs = {};
@@ -20,8 +20,7 @@ let userDoc: IUserDoc;
 let profileFuncBody: any;
 let accessToken: string;
 let bod: any;
-
-let callBackRes: Response;
+let startAuthRes: Response;
 
 // ------------------------------------------------------------
 //-----------------SPOTIFY AUTH CODE SECTION ------------------
@@ -47,13 +46,21 @@ export const postSpotify = (req: Request, res: Response) => {
 // ------------------------------------------------------------
 
 export const callbackFunc = (req: Request, res: Response) => {
+	return res.sendFile('/views/redirect.html', { root: '../' });
+};
+
+
+export const startAuth = (req: Request, res: Response) => {
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	const code = req.query.code!;
+	// const code = req.query.code!;
+	const code = req.body.code;
 	const clientId = data.spotify.client_id;
 	const clientSec = data.spotify.client_secret;
+	
+	console.log(code);
 
-	if (req.query.code == null) return res.sendStatus(401);
-
+	if (code == null) return res.sendStatus(401);
+	
 	const authReq = {
 		url: 'https://accounts.spotify.com/api/token',
 		form: {
@@ -63,24 +70,23 @@ export const callbackFunc = (req: Request, res: Response) => {
 		},
 		headers: {
 			Authorization:
-        'Basic ' + Buffer.from(clientId + ':' + clientSec).toString('base64'),
+			'Basic ' + Buffer.from(clientId + ':' + clientSec).toString('base64'),
 		},
 		json: true,
 	};
-
+	
 	request.post(authReq, authReqPost);
+	
+	startAuthRes = res;
 
 	// Replace this line with a variable with the auth link
-
-	callBackRes = res;
-
-	// return res.redirect(reqUrl); // Change to the google OAuth2 redirect
 };
 
 const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
 	if (err) return console.error(err);
 
 	bod = body;
+
 
 	const getProfile = {
 		url: 'https://api.spotify.com/v1/me',
@@ -92,9 +98,7 @@ const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
 
 	request.get(getProfile, getProfileFunc);
 
-	let resB = callBackRes;
-
-	return resB.sendFile(__dirname + '/views/success.html');
+	return startAuthRes.send({ auth: `${body.access_token}`, googleUrl: `${reqUrl}` }); // Change to the google OAuth2 redirect
 
 };
 
@@ -111,7 +115,7 @@ const getProfileFunc = (err: string, res: object, body: ISpotifyProfile) => {
 
 	// console.log(userDoc);
 	queue.push(userDoc.id);
-	db.listDocuments('id', userDoc.id).then(compareDBs);	
+	db.listDocuments('id', userDoc.id).then(compareDBs);
 };
 
 

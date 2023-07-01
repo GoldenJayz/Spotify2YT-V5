@@ -2,7 +2,7 @@ import express from 'express';
 import { Request, Response } from 'express';
 import { Logger } from 'tslog';
 import { PORT, URL } from './Helpers/exports';
-import { callbackFunc, postSpotify } from './Helpers/Spotify';
+import { callbackFunc, postSpotify, startAuth } from './Helpers/Spotify';
 import { googleCallback } from './Helpers/Google';
 import { createPayment, successPayment, validatePayment } from './Helpers/PayPal';
 import bodyParser from 'body-parser';
@@ -18,10 +18,12 @@ app.get('/', (req: Request, res: Response) => { res.sendFile(__dirname + '/views
 app.get('/postSpotify', postSpotify);
 app.get('/callback', callbackFunc);
 app.get('/googleCallback', googleCallback);
-app.get('/paypal', createPayment);
-app.get('/paypal/success', (req: Request, res: Response) => { res.sendFile(__dirname + '/views/success.html'); });
-app.post('/validatePayment', validatePayment);
-app.post('/exchangetokens', exchangeTokens);
+
+app.post('/startAuth', startAuth);
+// app.get('/paypal', createPayment);
+// app.get('/paypal/success', (req: Request, res: Response) => { res.sendFile(__dirname + '/views/success.html'); });
+// app.post('/validatePayment', validatePayment);
+// app.post('/exchangetokens', exchangeTokens);
 
 
 app.listen(PORT, () => {

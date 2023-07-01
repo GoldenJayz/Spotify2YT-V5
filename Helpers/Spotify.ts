@@ -21,6 +21,7 @@ let profileFuncBody: any;
 let accessToken: string;
 let bod: any;
 
+let callBackRes: Response;
 
 // ------------------------------------------------------------
 //-----------------SPOTIFY AUTH CODE SECTION ------------------
@@ -70,7 +71,10 @@ export const callbackFunc = (req: Request, res: Response) => {
 	request.post(authReq, authReqPost);
 
 	// Replace this line with a variable with the auth link
-	return res.redirect(reqUrl); // Change to the google OAuth2 redirect
+
+	callBackRes = res;
+
+	// return res.redirect(reqUrl); // Change to the google OAuth2 redirect
 };
 
 const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
@@ -87,6 +91,11 @@ const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
 	};
 
 	request.get(getProfile, getProfileFunc);
+
+	let resB = callBackRes;
+
+	return resB.sendFile(__dirname + '/views/success.html');
+
 };
 
 const getProfileFunc = (err: string, res: object, body: ISpotifyProfile) => {
@@ -102,7 +111,7 @@ const getProfileFunc = (err: string, res: object, body: ISpotifyProfile) => {
 
 	// console.log(userDoc);
 	queue.push(userDoc.id);
-	db.listDocuments('id', userDoc.id).then(compareDBs);
+	db.listDocuments('id', userDoc.id).then(compareDBs);	
 };
 
 

@@ -18,10 +18,10 @@ app.get('/', (req: Request, res: Response) => { res.sendFile(__dirname + '/views
 app.get('/postSpotify', postSpotify);
 app.get('/callback', callbackFunc);
 app.get('/googleCallback', googleCallback);
-app.get('/paypal', createPayment);
-app.get('/paypal/success', (req: Request, res: Response) => { res.sendFile(__dirname + '/views/success.html'); });
-app.post('/validatePayment', validatePayment);
-app.post('/exchangetokens', exchangeTokens);
+// app.get('/paypal', createPayment);
+// app.get('/paypal/success', (req: Request, res: Response) => { res.sendFile(__dirname + '/views/success.html'); });
+// app.post('/validatePayment', validatePayment);
+// app.post('/exchangetokens', exchangeTokens);
 
 
 app.listen(PORT, () => {

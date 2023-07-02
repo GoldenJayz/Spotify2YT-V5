@@ -17,7 +17,11 @@
             body: JSON.stringify({
                 code: code
             })
-        }).then(res => { console.log(res); })
+        })
+        .then(res => res.json())
+        .then(data => {
+            window.location.href = data.googleUrl;
+        })
         .catch(err => console.error(err) );
 
     </script>

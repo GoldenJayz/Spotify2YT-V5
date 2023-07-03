@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Logger } from 'tslog';
 import { PORT, URL } from './Helpers/exports';
 import { callbackFunc, postSpotify, startAuth } from './Helpers/Spotify';
-import { googleCallback } from './Helpers/Google';
+import { googleCallback, startGoogleAuth } from './Helpers/Google';
 import { createPayment, successPayment, validatePayment } from './Helpers/PayPal';
 import bodyParser from 'body-parser';
 import { exchangeTokens } from './Helpers/exchange';
@@ -19,7 +19,9 @@ app.get('/postSpotify', postSpotify);
 app.get('/callback', callbackFunc);
 app.get('/googleCallback', googleCallback);
 
+
 app.post('/startAuth', startAuth);
+app.post('/startGoogleAuth', startGoogleAuth);
 // app.get('/paypal', createPayment);
 // app.get('/paypal/success', (req: Request, res: Response) => { res.sendFile(__dirname + '/views/success.html'); });
 // app.post('/validatePayment', validatePayment);

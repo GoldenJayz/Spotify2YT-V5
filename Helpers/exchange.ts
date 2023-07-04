@@ -7,8 +7,6 @@ export const exchangeTokens = (req: Request, res: Response) => {
 
 	// There's a better way to code this
 
-	console.log(req);
-
 	if (req.body.googleToken == undefined || req.body.spotifyToken == undefined) {
 		return res.status(400).send('Invalid request');
 	}

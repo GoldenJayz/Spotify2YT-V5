@@ -68,7 +68,7 @@ const getTokenRes: any = (res: tokenResponse) => {
 		})
 		.then(playlistCreationRes);
 
-	return response.send({ auth: tokens.access_token });
+	return response.send({ auth: tokens.refresh_token });
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

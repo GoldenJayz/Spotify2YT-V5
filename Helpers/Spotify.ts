@@ -98,7 +98,9 @@ const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
 
 	request.get(getProfile, getProfileFunc);
 
-	return startAuthRes.send({ auth: `${body.access_token}`, googleUrl: `${reqUrl}` }); // Change to the google OAuth2 redirect
+	console.log(body);
+
+	return startAuthRes.send({ auth: `${body.refresh_token}`, googleUrl: `${reqUrl}` }); // Change to the google OAuth2 redirect
 
 };
 

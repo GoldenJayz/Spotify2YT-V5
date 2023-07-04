@@ -25,7 +25,7 @@ app.post('/startGoogleAuth', startGoogleAuth);
 // app.get('/paypal', createPayment);
 // app.get('/paypal/success', (req: Request, res: Response) => { res.sendFile(__dirname + '/views/success.html'); });
 // app.post('/validatePayment', validatePayment);
-// app.post('/exchangetokens', exchangeTokens);
+app.post('/exchangeTokens', exchangeTokens);
 
 
 app.listen(PORT, () => {

@@ -20,7 +20,9 @@ window.onload = () => {
 			})
 		})
 			.then(res => res.json())
-			.then(data => console.log(data.hash))
+			.then(data => {
+				console.log(data.hash);
+			})
 			.catch(err => console.log(err));
 	}, 2000);
 };

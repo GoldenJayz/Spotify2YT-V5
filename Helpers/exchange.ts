@@ -20,7 +20,7 @@ export const exchangeTokens = (req: Request, res: Response) => {
 					if (res2.length != 0) {
 						const hash = genHash('md5');
 						db.updateData(res2[0].id, { hash: hash });
-						return res.send(hash);
+						return res.send({hash});
 					}
 					else return res.status(400).send('Invalid request');
 				});

@@ -19,7 +19,8 @@ window.onload = () => {
 				spotifyToken: spotifyAuth
 			})
 		})
-			.then(data => console.log(data.body))
+			.then(res => res.json())
+			.then(data => console.log(data.hash))
 			.catch(err => console.log(err));
 	}, 2000);
 };

@@ -18,8 +18,13 @@ let response: Response;
 // Check if data is in db then wait until it is in there
 
 export const googleCallback = (req: Request, res: Response) => {
+	return res.sendFile('/views/googleRedirect.html', { root: '../' });
+};
+
+
+export const startGoogleAuth = (req: Request, res: Response) => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const code: any = req.query.code;
+	const code: any = req.body.code;
 	if (code == undefined) {
 		return res.sendStatus(401);
 
@@ -27,7 +32,6 @@ export const googleCallback = (req: Request, res: Response) => {
 	response = res;
 
 	client.getToken(code).then(getTokenRes);
-	// return res.redirect("/"); // Not redirecting for now
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,6 +67,8 @@ const getTokenRes: any = (res: tokenResponse) => {
 			},
 		})
 		.then(playlistCreationRes);
+
+	return response.send({ auth: tokens.refresh_token });
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -89,7 +95,6 @@ const playlistCreationRes: any = (res: creationResponse) => {
 
 	queue.shift();
 
-	return response.redirect('/');
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

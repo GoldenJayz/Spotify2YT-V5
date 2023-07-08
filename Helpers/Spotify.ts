@@ -134,6 +134,7 @@ const compareDBs = (f: Array<listDocRes>) => {
 		if (comparator.id != null && userDoc.id != null) {
 			if (comparator.id === userDoc.id) {
 				logger.info('user already in db');
+				db.updateData(userDoc.id, { spotify_refresh_token: userDoc.spotify_refresh_token });
 			} else {
 				db.insertData([userDoc]);
 			}

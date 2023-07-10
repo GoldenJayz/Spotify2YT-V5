@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import { Request, Response } from 'express';
 import { Logger } from 'tslog';
 import { PORT, URL } from './Helpers/exports';
@@ -13,19 +14,22 @@ const app = express();
  
 app.use(express.static('public'));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.get('/', (req: Request, res: Response) => { res.sendFile(__dirname + '/views/index.html'); });
 app.get('/postSpotify', postSpotify);
 app.get('/callback', callbackFunc);
 app.get('/googleCallback', googleCallback);
 
-
+// Protect these endpoints so they do not crash
 app.post('/startAuth', startAuth);
 app.post('/startGoogleAuth', startGoogleAuth);
 // app.get('/paypal', createPayment);
 // app.get('/paypal/success', (req: Request, res: Response) => { res.sendFile(__dirname + '/views/success.html'); });
 // app.post('/validatePayment', validatePayment);
 app.post('/exchangeTokens', exchangeTokens);
+
+
 
 
 app.listen(PORT, () => {

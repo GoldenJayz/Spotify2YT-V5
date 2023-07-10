@@ -22,6 +22,7 @@ window.onload = () => {
 			.then(res => res.json())
 			.then(data => {
 				console.log(data.hash);
+				document.cookie = `hash=${data.hash}`;
 			})
 			.catch(err => console.log(err));
 	}, 2000);

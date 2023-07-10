@@ -30,15 +30,41 @@ export const postSpotify = (req: Request, res: Response) => {
 	userPlaylistName = req.query.url;
 	logger.info(req.query.url);
 	const clientId = data.spotify.client_id; // grabs client id from config
+	const clientSec = data.spotify.client_secret;
 	const scopes =
     'user-read-private user-read-email ugc-image-upload playlist-read-private playlist-read-collaborative';
+	const hash = req.cookies.hash;
 
-	return res.redirect(
-		`https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}${
-			scopes ? '&scope=' + encodeURIComponent(scopes) : ''
-		}&redirect_uri=${encodeURIComponent(URL + 'callback')}`
-	);
+	console.log(req.cookies.hash);
+
+	if (req.cookies.spotifyAuth == undefined) {
+		return res.redirect(
+			`https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}${
+				scopes ? '&scope=' + encodeURIComponent(scopes) : ''
+			}&redirect_uri=${encodeURIComponent(URL + 'callback')}`
+		);
+	}
+
+	else {
+		// --------------------REFRESH -> ACCESS TOKEN ----------------
+
+		const refresh_token = req.cookies.spotifyAuth;
+		const authReq = {
+			url: 'https://accounts.spotify.com/api/token',
+			headers: { 'Authorization': 'Basic ' + (Buffer.from(clientId + ':' + clientSec).toString('base64')) },
+			form: {
+				grant_type: 'refresh_token',
+				refresh_token: refresh_token
+			},
+			json: true,
+		};
+		startAuthRes = res;
+	
+		request.post(authReq, authReqPost);
+	}
+
 };
+
 
 
 // ------------------------------------------------------------
@@ -57,27 +83,35 @@ export const startAuth = (req: Request, res: Response) => {
 	const clientId = data.spotify.client_id;
 	const clientSec = data.spotify.client_secret;
 	
+
 	console.log(code);
 
 	if (code == null) return res.sendStatus(401);
 	
-	const authReq = {
-		url: 'https://accounts.spotify.com/api/token',
-		form: {
-			code,
-			redirect_uri: URL + 'callback',
-			grant_type: 'authorization_code',
-		},
-		headers: {
-			Authorization:
-			'Basic ' + Buffer.from(clientId + ':' + clientSec).toString('base64'),
-		},
-		json: true,
-	};
+	try {
+		
+		const authReq = {
+			url: 'https://accounts.spotify.com/api/token',
+			form: {
+				code,
+				redirect_uri: URL + 'callback',
+				grant_type: 'authorization_code',
+			},
+			headers: {
+				Authorization:
+				'Basic ' + Buffer.from(clientId + ':' + clientSec).toString('base64'),
+			},
+			json: true,
+		};
+
+		request.post(authReq, authReqPost);
 	
-	request.post(authReq, authReqPost);
-	
-	startAuthRes = res;
+		startAuthRes = res;
+	}
+	catch {
+		res.sendStatus(401);
+	}
+
 
 	// Replace this line with a variable with the auth link
 };
@@ -100,8 +134,8 @@ const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
 
 	console.log(body);
 
-	return startAuthRes.send({ auth: `${body.refresh_token}`, googleUrl: `${reqUrl}` }); // Change to the google OAuth2 redirect
-
+	if (body.refresh_token != undefined) return startAuthRes.send({ auth: `${body.refresh_token}`, googleUrl: `${reqUrl}` });
+	else return startAuthRes.redirect(reqUrl);
 };
 
 const getProfileFunc = (err: string, res: object, body: ISpotifyProfile) => {

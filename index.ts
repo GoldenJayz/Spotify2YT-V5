@@ -8,6 +8,7 @@ import { googleCallback, startGoogleAuth } from './Helpers/Google';
 import { createPayment, successPayment, validatePayment } from './Helpers/PayPal';
 import bodyParser from 'body-parser';
 import { exchangeTokens } from './Helpers/exchange';
+import cors from 'cors';
 
 const logger = new Logger({ name: 'Index' }); 
 const app = express();
@@ -15,6 +16,7 @@ const app = express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors());
 
 app.get('/', (req: Request, res: Response) => { res.sendFile(__dirname + '/views/index.html'); });
 app.get('/postSpotify', postSpotify);

@@ -21,6 +21,8 @@ let profileFuncBody: any;
 let accessToken: string;
 let bod: any;
 let startAuthRes: Response;
+let refresh_token;
+let usingRefreshToken = false;
 
 // ------------------------------------------------------------
 //-----------------SPOTIFY AUTH CODE SECTION ------------------
@@ -48,7 +50,8 @@ export const postSpotify = (req: Request, res: Response) => {
 	else {
 		// --------------------REFRESH -> ACCESS TOKEN ----------------
 
-		const refresh_token = req.cookies.spotifyAuth;
+		usingRefreshToken = true;
+		refresh_token = req.cookies.spotifyAuth;
 		const authReq = {
 			url: 'https://accounts.spotify.com/api/token',
 			headers: { 'Authorization': 'Basic ' + (Buffer.from(clientId + ':' + clientSec).toString('base64')) },
@@ -59,6 +62,8 @@ export const postSpotify = (req: Request, res: Response) => {
 			json: true,
 		};
 		startAuthRes = res;
+
+		// Redirect to spotifyCallback? 
 	
 		request.post(authReq, authReqPost);
 	}
@@ -121,6 +126,7 @@ const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
 
 	bod = body;
 
+	if (usingRefreshToken == true) bod.refresh_token = refresh_token;
 
 	const getProfile = {
 		url: 'https://api.spotify.com/v1/me',
@@ -134,13 +140,19 @@ const authReqPost = (err: string, res: object, body: ISpotifyAccessToken) => {
 
 	console.log(body);
 
-	if (body.refresh_token != undefined) return startAuthRes.send({ auth: `${body.refresh_token}`, googleUrl: `${reqUrl}` });
-	else return startAuthRes.redirect(reqUrl);
+	if (usingRefreshToken == false) return startAuthRes.send({ auth: `${body.refresh_token}`, googleUrl: `${reqUrl}` });
+	else if (usingRefreshToken == true) return startAuthRes.redirect(reqUrl); // This works do not touch u fucker
+	// if (body.refresh_token != undefined) return startAuthRes.redirect('/callback');
+	// else return startAuthRes.sendStatus(200);
 };
 
 const getProfileFunc = (err: string, res: object, body: ISpotifyProfile) => {
+
+	// HERE
 	profileFuncBody = body;
 	if (err) return console.warn(err);
+
+	// it is setting the refresh token to null because not in body when using refresh token to recieve access token
 
 	userDoc = {
 		// constructs user doc to be compared to existing data in db
@@ -181,6 +193,8 @@ const compareDBs = (f: Array<listDocRes>) => {
 };
 
 const getUserCall = (res: Array<listDocRes>) => {
+
+	// Problem is here
 	const user = res[0];
 
 	const accessTokenReq = {

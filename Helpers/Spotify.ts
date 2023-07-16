@@ -67,7 +67,6 @@ export const postSpotify = (req: Request, res: Response) => {
 	
 		request.post(authReq, authReqPost);
 	}
-
 };
 
 

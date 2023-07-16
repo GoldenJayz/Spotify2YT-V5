@@ -2,7 +2,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const code = urlParams.get('code');
 
 // Switch this to public URL instead of testing URL 
-const url = 'http://localhost:6969/startGoogleAuth';
+const url = `${window.location.protocol}//${window.location.host}/startGoogleAuth`;
 fetch(url, {
 	method: 'POST',
 	headers: { 'Content-Type': 'application/json' },
@@ -14,6 +14,6 @@ fetch(url, {
 	.then(data => {
 		document.cookie = `googleAuth=${data.auth};`;
 
-		window.location.href = 'http://localhost:6969';
+		window.location.href = `${window.location.protocol}//${window.location.host}/`; // To be determined
 	})
 	.catch(err => console.error(err));

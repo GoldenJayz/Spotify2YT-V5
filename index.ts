@@ -32,8 +32,6 @@ app.post('/startGoogleAuth', startGoogleAuth);
 app.post('/exchangeTokens', exchangeTokens);
 
 
-
-
 app.listen(PORT, () => {
 	logger.silly(URL);
 });

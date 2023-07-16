@@ -2,7 +2,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const code = urlParams.get('code');
 
 // Switch this to public URL instead of testing URL 
-const url = 'http://localhost:6969/startAuth';
+const url = `${window.location.protocol}//${window.location.host}/startAuth`;
 fetch(url, {
 	method: 'POST',
 	headers: { 'Content-Type': 'application/json' },

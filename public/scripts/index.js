@@ -11,7 +11,7 @@ window.onload = () => {
 	let spotifyAuth = cookies[0].slice(12);
 	let googleAuth = cookies[1].trim().slice(11);
 	setTimeout(() => {
-		fetch('http://localhost:6969/exchangeTokens', {
+		fetch(`${window.location.protocol}//${window.location.host}/exchangeTokens`, {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({

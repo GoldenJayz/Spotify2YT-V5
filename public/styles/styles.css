@@ -130,3 +130,11 @@ a.nav-link {
 .alert {
   margin: 0 !important;
 }
+
+
+/* Privacy Policy */
+
+.quiet {
+  font-size: 10px;
+  color: gray;
+}

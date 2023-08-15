@@ -22,6 +22,7 @@ app.get('/', (req: Request, res: Response) => { res.sendFile(__dirname + '/views
 app.get('/postSpotify', postSpotify);
 app.get('/callback', callbackFunc);
 app.get('/googleCallback', googleCallback);
+app.get('/privacyPolicy', (req: Request, res: Response) => res.sendFile(__dirname + '/views/privacyPolicy.html'));
 
 // Protect these endpoints so they do not crash
 app.post('/startAuth', startAuth);
